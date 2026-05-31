@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>TraceMap Replay</title>
+
+    <style>
+        body {
+            margin: 0;
+            width: 100%;
+            height: auto;
+            overflow: auto;
+            background: #111;
+            cursor: none;
+        }
+
+        #cursor {
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+            /* position: fixed;0 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.08s linear;
+        }
+
+        #controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+        }
+
+        button {
+            padding: 10px 18px;
+            margin-left: 10px;
+            border: none;
+            background: #222;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        #sessionScreenshot {
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100vw;
+            height: auto;
+
+            z-index: 1;
+
+        }
+
+        #heatmapLayer {
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            pointer-events: none;
+
+            z-index: 2;
+
+        }
+
+        .ripple {
+            width: 20px;
+            height: 20px;
+            border: 2px solid red;
+            border-radius: 50%;
+            /* position: fixed; */
+            position: absolute;
+            pointer-events: none;
+            z-index: 9998;
+            animation: rippleAnim 0.6s ease-out forwards;
+        }
+
+        @keyframes rippleAnim {
+
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <img id="sessionScreenshot">
+
+    <div id="heatmapLayer"></div>
+
+    <div id="controls">
+
+        <button id="playBtn">Play</button>
+        <button id="pauseBtn">Pause</button>
+        <button id="speed1x">1x</button>
+        <button id="speed2x">2x</button>
+        <button id="speed4x">4x</button>
+
+    </div>
+
+    <div id="cursor"></div>
+
+    <script>
+
+        const cursor = document.getElementById("cursor");
+
+        const params = new URLSearchParams(window.location.search);
+
+        const sessionId = params.get("sessionId");
+
+        async function loadScreenshot() {
+
+            try {
+
+                const response = await fetch(
+                    `http://localhost:5000/screenshot/${sessionId}`
+                );
+
+                const screenshot =
+                    await response.json();
+
+                console.log(screenshot);
+
+                document
+                    .getElementById(
+                        "sessionScreenshot"
+                    )
+                    .src =
+                    `http://localhost:5000/uploads/${screenshot.imagePath}`;
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+
+        }
+
+        async function loadReplayHeatmap() {
+
+            const response = await fetch(
+                `http://localhost:5000/heatmap/${sessionId}`
+            );
+
+            const events = await response.json();
+
+            const layer =
+                document.getElementById(
+                    "heatmapLayer"
+                );
+
+            events.forEach((event) => {
+
+                const dot =
+                    document.createElement("div");
+
+                dot.style.position = "absolute";
+                dot.style.borderRadius = "50%";
+                dot.style.pointerEvents = "none";
+                dot.style.transform = "translate(-50%, -50%)";
+                dot.style.zIndex = "9999";
+
+                if (event.eventType === "click") {
+
+                    dot.style.left =
+                        event.x + "px";
+
+                    dot.style.top =
+                        (
+                            event.y +
+                            (event.scrollY || 0)
+                        ) + "px";
+
+                    dot.style.width = "50px";
+                    dot.style.height = "50px";
+
+                    dot.style.background =
+                        "rgba(255,0,0,0.3)";
+
+                    dot.style.filter =
+                        "blur(15px)";
+
+                }
+
+                else {
+                    return;
+                }
+
+                layer.appendChild(dot);
+
+            });
+
+        }
+
+        async function loadReplay() {
+
+            try {
+
+                const response = await fetch(
+                    `http://localhost:5000/session/${sessionId}`
+                );
+
+                const events = await response.json();
+
+                console.log(events);
+
+                replayEvents(events);
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+
+        }
+
+        function createRipple(x, y) {
+
+            const ripple = document.createElement("div");
+
+            ripple.classList.add("ripple");
+
+            ripple.style.left = x - 10 + "px";
+            ripple.style.top = y - 10 + "px";
+
+            document.body.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+
+        }
+
+        let replayTimeouts = [];
+        let isPaused = false;
+
+        let replaySpeed = 0.3;
+
+        function replayEvents(events) {
+
+            replayTimeouts = [];
+
+            events.forEach((event) => {
+
+                const delay =
+                    (event.timestamp - events[0].timestamp) * replaySpeed;
+
+                const timeout = setTimeout(() => {
+
+                    if (isPaused) return;
+
+                    const screenshot =
+                        document.getElementById("sessionScreenshot");
+
+                    const scaleX =
+                        screenshot.width /
+                        screenshot.naturalWidth;
+
+                    const scaleY =
+                        screenshot.height /
+                        screenshot.naturalHeight;
+
+                    if (event.eventType === "scroll") {
+
+                        window.scrollTo(
+                            0,
+                            event.scrollY
+                        );
+
+                    } else {
+
+                        // cursor.style.left = event.x + "px";
+                        cursor.style.left =
+                            event.x + "px";
+
+                        cursor.style.top =
+                            (event.y + (event.scrollY || 0))
+                            + "px";
+
+                    }
+
+                    if (event.eventType === "click") {
+
+                        cursor.style.transform = "scale(1.8)";
+
+                        createRipple(
+                            event.x,
+                            event.y + (event.scrollY || 0)
+                        );
+
+                        setTimeout(() => {
+                            cursor.style.transform = "scale(1)";
+                        }, 150);
+
+                    }
+
+                }, delay);
+
+                replayTimeouts.push(timeout);
+
+            });
+
+        }
+
+        document.getElementById("pauseBtn")
+            .addEventListener("click", () => {
+
+                isPaused = true;
+
+                replayTimeouts.forEach((timeout) => {
+                    clearTimeout(timeout);
+                });
+
+            });
+
+        document.getElementById("playBtn")
+            .addEventListener("click", () => {
+
+                replayTimeouts.forEach((timeout) => {
+                    clearTimeout(timeout);
+                });
+
+                isPaused = false;
+
+                loadReplay();
+
+            });
+
+        document.getElementById("speed1x")
+            .addEventListener("click", () => {
+
+                replaySpeed = 1;
+
+                console.log("1x Speed");
+
+            });
+
+        document.getElementById("speed2x")
+            .addEventListener("click", () => {
+
+                replaySpeed = 0.15;
+
+                console.log("2x Speed");
+
+            });
+
+        document.getElementById("speed4x")
+            .addEventListener("click", () => {
+
+                replaySpeed = 0.03;
+
+                console.log("4x Speed");
+
+            });
+
+        loadScreenshot();
+
+        loadReplayHeatmap();
+
+        // loadReplay();
+
+    </script>
+
+</body>
+
+</html>
+
+
+<!-- localStorage.getItem("tracemap_session"); -->
+
+<!-- testScreenshot() -->

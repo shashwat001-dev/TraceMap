@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TraceMap Sessions</title>
+
+  <style>
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #111;
+      color: white;
+      font-family: Arial;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .session-card {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .session-card:hover {
+      background: #292929;
+      transform: translateY(-3px);
+    }
+
+    .session-id {
+      color: #00ff99;
+      font-size: 14px;
+      margin-bottom: 10px;
+      word-break: break-all;
+    }
+
+    .events {
+      color: #aaa;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <h1>TraceMap Sessions</h1>
+
+  <div id="sessionsContainer"></div>
+
+  <script>
+
+    const container = document.getElementById("sessionsContainer");
+
+    async function loadSessions() {
+
+      try {
+
+        const response = await fetch("http://localhost:5000/sessions");
+
+        const sessions = await response.json();
+
+        console.log(sessions);
+
+        renderSessions(sessions);
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    }
+
+    function renderSessions(sessions) {
+
+      sessions.forEach((session) => {
+
+        const card = document.createElement("div");
+
+        card.classList.add("session-card");
+
+        card.innerHTML = `
+          <div class="session-id">${session._id}</div>
+          <div class="events">
+            Total Events: ${session.totalEvents}
+          </div>
+        `;
+
+        card.addEventListener("click", () => {
+
+          window.location.href =
+            `replay.html?sessionId=${session._id}`;
+
+        });
+
+        container.appendChild(card);
+
+      });
+
+    }
+
+    loadSessions();
+
+  </script>
+
+</body>
+
+</html>

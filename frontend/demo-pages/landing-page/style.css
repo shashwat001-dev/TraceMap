@@ -1,0 +1,850 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 400svh;
+    width: 100%;
+}
+
+.hero {
+    height: 110vh;
+    width: 100%;
+    border-bottom-left-radius: 5rem;
+    border-bottom-right-radius: 5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero>img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: right;
+    z-index: 0;
+}
+
+.hero .overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+}
+
+
+
+.hero .navbar {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 12svh;
+    padding-top: 1rem;
+    padding-left: 8rem;
+    padding-right: 8rem;
+}
+
+.navbar #left {
+    display: flex;
+    gap: 1rem;
+    color: white;
+    font-size: clamp(16px, 1.5vw, 32px);
+    font-family: monospace;
+    font-weight: normal;
+}
+
+.navbar #left>h4 {
+    padding-top: 0.8rem;
+    transition: transform 0.1s ease;
+    cursor: pointer;
+}
+
+.navbar #left>h4:hover {
+    color: #956afa;
+    transform: scale(1.1);
+    text-decoration: underline;
+}
+
+
+.navbar #left>img {
+    padding-left: .5rem;
+    padding-right: .5rem;
+    height: 6vh;
+    transition: transform 0.6s ease;
+    cursor: pointer;
+}
+
+.navbar #left>img:hover {
+    transform: rotate(360deg);
+}
+
+.navbar #right {
+    display: flex;
+    gap: 1.5rem;
+    font-size: clamp(20px, 10vw, 32px);
+    color: white;
+    padding-top: 0.8rem;
+}
+
+.navbar #right i {
+    padding-top: .4rem;
+    transition: transform 0.1s ease;
+    cursor: pointer;
+}
+
+.navbar #right i:hover {
+    color: #956afa;
+    transform: rotate(360deg);
+}
+
+.navbar #right button:hover {
+    transform: scale(1.1);
+    background-color: #956afa;
+    color: ghostwhite;
+}
+
+
+#right .ri-menu-line {
+    display: none;
+}
+
+.navbar #right button {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: monospace;
+    letter-spacing: -1px;
+    transition: transform 0.1s ease;
+    cursor: pointer;
+}
+
+.hero .contents {
+    padding-top: 4rem;
+    padding-left: 8rem;
+    height: 60%;
+    width: 100%;
+    position: relative;
+    z-index: 100;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-direction: column;
+    color: white;
+    font-family: monospace;
+}
+
+
+.contents #c2 button:nth-child(2) {
+    margin-left: 1rem;
+
+}
+
+.contents p {
+    padding-top: 11rem;
+    padding-bottom: 1rem;
+}
+
+.contents button {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: monospace;
+    letter-spacing: -1px;
+    transition: transform 0.1s ease;
+    cursor: pointer;
+}
+
+.contents button:hover {
+    transform: scale(1.1);
+    background-color: #956afa;
+    color: ghostwhite;
+}
+
+.text-changer {
+    height: 4rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: clamp(32px, 2.5vw, 32px);
+    gap: 0.5rem;
+}
+
+.text-changer h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+}
+
+.text-changer h1 .intro-text {
+    margin-top: -2px;
+}
+
+.roles-container {
+    width: 25%;
+    font-size: clamp(40px, 4vw, 60px);
+    font-weight: 800;
+    overflow: hidden;
+    position: relative;
+    height: clamp(3rem, 4vw, 3.5rem);
+}
+
+.role {
+    display: block;
+    height: 100%;
+    color: #956afa;
+    animation: role-change 4s infinite;
+}
+
+.text-changer h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+
+@keyframes role-change {
+
+    10% {
+        transform: translateY(-102%);
+    }
+
+    25% {
+        transform: translateY(-100%);
+    }
+
+    35% {
+        transform: translateY(-202%);
+    }
+
+    50% {
+        transform: translateY(-200%);
+    }
+
+    60% {
+        transform: translateY(-302%);
+    }
+
+    75% {
+        transform: translateY(-300%)
+    }
+
+    85% {
+        transform: translateY(-402%);
+    }
+
+    100% {
+        transform: translateY(-400%)
+    }
+}
+
+.phase2 {
+    margin-top: 3rem;
+    padding-right: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sideB {
+    display: flex;
+    align-items: flex-start;
+    height: 30rem;
+    width: 40rem;
+    padding-left: 3rem;
+    padding-top: 2rem;
+    font-family: monospace;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+.sideB h4 {
+    padding-top: 1.5rem;
+    font-size: 20px;
+}
+
+.sideB .sub {
+    display: flex;
+    flex-direction: column;
+    padding-right: 2rem;
+    gap: 20px;
+}
+
+.wrapper {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+.wrapper .static-txt {
+    color: black;
+    font-size: 70px;
+    letter-spacing: -5px;
+    padding-top: 25px;
+    font-weight: 400;
+}
+
+.wrapper .dynamic-txts {
+    margin-left: 0;
+    height: 90px;
+    line-height: 90px;
+    overflow: hidden;
+}
+
+.dynamic-txts li {
+    list-style: none;
+    color: #956afa;
+    font-size: 72px;
+    font-weight: 500;
+    position: relative;
+    top: 0;
+    animation: slide 6s steps(4) infinite;
+}
+
+@keyframes slide {
+    100% {
+        top: -360px;
+    }
+}
+
+.dynamic-txts li span {
+    position: relative;
+}
+
+.dynamic-txts li span:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    border-left: 2px solid #956afa;
+    animation: typing 1.5s steps(10) infinite;
+}
+
+@keyframes typing {
+    100% {
+        left: 100%;
+        margin: 0 50px 0 50px;
+    }
+}
+
+.phase2 .sideA {
+    height: 32rem;
+    width: 50rem;
+    background-color: #956afa;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: row;
+    position: relative;
+    border-bottom-left-radius: 4rem;
+    border-top-right-radius: 4rem;
+}
+
+/* 🔥 Top-left inverted corner 
+.phase2 .sideA::before {
+    content: "";
+    position: absolute;
+
+    width: 100%;
+    height: 8rem;
+    border-bottom-left-radius: 3rem;
+    /* border-bottom-right-radius: 4rem; 
+    /* border-radius: 50%; 
+
+    background: white; /* ✅ matches page bg 
+
+    top: -7rem;
+    left: 0rem;
+
+    z-index: 1;
+}*/
+
+.sideA .AL,
+.sideA .AR {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex-shrink: 0;
+    align-items: flex-start;
+}
+
+.phase2 .sideA button {
+    margin-top: 5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: monospace;
+    letter-spacing: -1px;
+    box-shadow: 0 0 20px rgba(149, 106, 250, 0.35),
+        0 0 8px rgba(0, 0, 0, 0.15);
+    opacity: 1;
+    transition: opacity 0.8s ease;
+    pointer-events: auto;
+    white-space: nowrap;
+    background-color: black;
+    color: white;
+}
+
+
+.phase2 .sideA button.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+
+.phase2 .sideA .AR button:nth-child(1) {
+    margin-top: 10em;
+    margin-right: 5em;
+    background-color: white;
+    color: #020002;
+    transition: transform 1s ease, opacity 0.8s ease;
+    cursor: pointer;
+
+}
+
+.phase2 .sideA .AR button:nth-child(1):hover {
+    rotate: -8deg;
+}
+
+.phase2 .sideA .AR button:nth-child(2) {
+    margin-top: 3.8em;
+    margin-left: 1.5em;
+    transition: transform 1s ease, opacity 0.8s ease;
+    cursor: pointer;
+}
+
+
+
+.phase2 .sideA .AR button:nth-child(2):hover {
+    rotate: 8deg;
+}
+
+
+
+
+.phase2 .sideA .AL button:nth-child(1) {
+    margin-top: 3.5em;
+    margin-left: 20em;
+    transition: transform 1s ease, opacity 0.8s ease;
+    cursor: pointer;
+}
+
+.phase2 .sideA .AL button:nth-child(1):hover {
+    rotate: 8deg;
+}
+
+
+
+.phase2 .sideA .AL button:nth-child(2) {
+    margin-top: 3em;
+    margin-left: 5em;
+    background-color: white;
+    color: #020002;
+    transition: transform 1s ease, opacity 0.8s ease;
+    cursor: pointer;
+}
+
+.phase2 .sideA .AL button:nth-child(2):hover {
+    rotate: -8deg;
+}
+
+.phase2 .sideA .AL button:nth-child(3) {
+    margin-top: 4em;
+    margin-left: 5.5em;
+    background-color: black;
+    transition: transform 1s ease, opacity 0.8s ease;
+    cursor: pointer;
+}
+
+.phase2 .sideA .AL button:nth-child(3):hover {
+    rotate: 8deg;
+}
+
+.phase2 .sideA .AL button:nth-child(4) {
+    margin-top: 4em;
+    margin-left: 19em;
+    background-color: white;
+    color: #020002;
+    transition: transform 1s ease, opacity 0.8s ease;
+    cursor: pointer;
+}
+
+.phase2 .sideA .AL button:nth-child(4):hover {
+    rotate: -8deg;
+}
+
+.toggle {
+    background: #956afa;
+    width: 5.2em;
+    height: 5.2em;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    left: 22em;
+    top: 13em;
+    z-index: 2;
+
+}
+
+.toggle i {
+    font-size: 3em;
+    color: white;
+    display: block;
+    margin: 0.35em;
+    transition: transform 0.3s ease;
+}
+
+.toggle.active {
+    background: white;
+}
+
+.toggle.active i {
+    color: black;
+}
+
+.menu {
+    position: absolute;
+    left: 21.3rem;
+    top: 12.3rem;
+    background: #020002;
+    height: 6.2rem;
+    width: 6.2rem;
+    border-radius: 50%;
+
+    transform: scale(0);
+    transition: 0.7s;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(149, 106, 250, 0.2);
+}
+
+.menu a {
+    position: absolute;
+    font-size: 0.8rem;
+    color: #fefafa;
+    transition: .4s;
+    text-decoration: none;
+}
+
+.menu i {
+    font-size: 0.7em;
+}
+
+.menu a:nth-child(1) {
+    top: 1em;
+    left: 3.6em;
+}
+
+.menu a:nth-child(2) {
+    top: 2.3em;
+    left: 5.7em;
+}
+
+.menu a:nth-child(3) {
+    top: 4.4em;
+    left: 5.7em;
+}
+
+.menu a:nth-child(4) {
+    top: 5.5em;
+    left: 45px;
+}
+
+.menu a:nth-child(5) {
+    top: 4.4em;
+    left: 1.5em;
+}
+
+.menu a:nth-child(6) {
+    top: 2.3em;
+    left: 1.5em;
+}
+
+.menu a:hover {
+    color: #956afa;
+    transition: 0.2s;
+    transform: scale(1.5);
+}
+
+
+@media (max-width: 500px) {
+    .hero {
+        height: 135vh;
+    }
+
+    .hero .navbar {
+        margin-top: 1rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        height: 8svh;
+
+    }
+
+    .navbar #left h4 {
+        display: none;
+    }
+
+    #right .ri-facebook-fill {
+        display: none;
+    }
+
+    #right .ri-twitter-x-line {
+        display: none;
+    }
+
+    #right .ri-linkedin-fill {
+        display: none;
+    }
+
+    #right button {
+        display: none;
+    }
+
+    #right .ri-menu-line {
+        display: block;
+    }
+
+    .hero .contents {
+        padding-left: 2rem;
+    }
+
+    .hero .contents p {
+        padding-top: 12rem;
+        white-space: normal;
+    }
+
+    .contents #c2 {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contents #c2 button:nth-child(2) {
+        margin: 0;
+    }
+
+    .hero .contents .text-changer {
+        gap: 2px;
+        height: 18rem;
+        white-space: normal;
+    }
+
+
+
+    .roles-container {
+        width: 100%;
+        margin-top: 1rem;
+        height: clamp(4rem, 4vw, 3.5rem);
+        font-size: clamp(60px, 4vw, 60px);
+    }
+
+    .hero>img {
+        object-position: center;
+    }
+
+
+}
+
+@media (max-width: 800px) {
+    .phase2 {
+        flex-direction: column;
+        padding-right: 0;
+        justify-content: flex-start;
+    }
+
+    .phase2 .sideA {
+        height: clamp(18rem, 60vw, 28rem);
+        width: clamp(75%, 90vw, 90%);
+        font-size: 0.75rem;
+        /* This scales all em-based units */
+    }
+
+    .phase2 .sideA button {
+        font-size: inherit;
+        transition: opacity 0.8s ease !important;
+    }
+
+    .menu {
+        left: 21.3em;
+        top: 12.3em;
+        height: 6.2em;
+        width: 6.2em;
+    }
+
+    .menu a {
+        font-size: inherit;
+    }
+
+    .menu a:nth-child(1) {
+        top: 0.5em;
+        left: 2.8em;
+    }
+
+    .menu a:nth-child(2) {
+        top: 1.6em;
+        left: 4.5em;
+    }
+
+    .menu a:nth-child(3) {
+        top: 3.4em;
+        left: 4.5em;
+    }
+
+    .menu a:nth-child(4) {
+        top: 4.4em;
+        left: 2.7em;
+    }
+
+    .menu a:nth-child(5) {
+        top: 3.3em;
+        left: 1em;
+    }
+
+    .menu a:nth-child(6) {
+        top: 1.6em;
+        left: 1em;
+    }
+
+    .hero {
+        height: 130vh;
+    }
+}
+
+
+
+
+@media (max-width: 500px) {
+    .phase2 .sideA {
+        display: none;
+    }
+
+    .phase2 .sideB {
+        flex-direction: column;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+    }
+
+    .sideB h4 {
+        font-size: clamp(14px, 4vw, 18px);
+        padding-top: 1rem;
+    }
+
+    .sideB .sub p {
+        font-size: clamp(12px, 3.5vw, 16px);
+        line-height: 1.5;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}
+
+
+
+
+@media (max-width: 1000px) and (min-width: 501px) {
+    .hero {
+        height: 100vh;
+    }
+
+    .hero .navbar {
+        margin-top: 1rem;
+        padding-right: 1.5rem;
+        padding-left: 1.5rem;
+        height: 8svh;
+
+    }
+
+    .navbar #left h4 {
+        display: none;
+    }
+
+    #right .ri-facebook-fill {
+        display: none;
+    }
+
+    #right .ri-twitter-x-line {
+        display: none;
+    }
+
+    #right .ri-linkedin-fill {
+        display: none;
+    }
+
+    #right button {
+        display: none;
+    }
+
+    #right .ri-menu-line {
+        display: block;
+    }
+
+    .hero .contents {
+        padding-left: 2rem;
+    }
+
+    .hero .contents p {
+        padding-top: 0;
+        white-space: normal;
+    }
+
+    .contents #c2 {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contents #c2 button:nth-child(2) {
+        margin: 0;
+    }
+
+    .hero .contents .text-changer {
+        margin-bottom: -3rem;
+        gap: 2px;
+        height: 18rem;
+        white-space: normal;
+    }
+
+
+
+    .roles-container {
+        padding-left: 0rem;
+        font-style: italic;
+        width: 50%;
+
+        height: clamp(4rem, 4vw, 3.5rem);
+        font-size: clamp(60px, 4vw, 60px);
+    }
+
+    .hero>img {
+        object-position: center;
+    }
+}
