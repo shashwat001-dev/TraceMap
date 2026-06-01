@@ -422,9 +422,60 @@
 
             });
 
+        async function loadRageClicks() {
+
+            const response = await fetch(
+                `http://localhost:5000/rage-clicks/${sessionId}`
+            );
+
+            const rageClicks = await response.json();
+
+            const layer =
+                document.getElementById("heatmapLayer");
+
+            rageClicks.forEach((click) => {
+
+                const dot =
+                    document.createElement("div");
+
+                dot.style.position = "absolute";
+
+                dot.style.left =
+                    click.x + "px";
+
+                dot.style.top =
+                    click.y + "px";
+
+                dot.style.width = "80px";
+
+                dot.style.height = "80px";
+
+                dot.style.borderRadius = "50%";
+
+                dot.style.background =
+                    "rgba(255,165,0,0.45)";
+
+                dot.style.filter =
+                    "blur(20px)";
+
+                dot.style.transform =
+                    "translate(-50%, -50%)";
+
+                dot.style.pointerEvents = "none";
+
+                dot.style.zIndex = "10000";
+
+                layer.appendChild(dot);
+
+            });
+
+        }
+
         loadScreenshot();
 
         loadReplayHeatmap();
+
+        loadRageClicks();
 
         // loadReplay();
 

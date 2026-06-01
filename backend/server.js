@@ -126,6 +126,68 @@ app.get("/heatmap/:sessionId", async (req, res) => {
 
 });
 
+app.get("/rage-clicks/:sessionId", async (req, res) => {
+
+    try {
+
+        const clicks = await Event.find({
+            sessionId: req.params.sessionId,
+            eventType: "click"
+        }).sort({ timestamp: 1 });
+
+        const rageClicks = [];
+
+        for (let i = 2; i < clicks.length; i++) {
+
+            const c1 = clicks[i - 2];
+            const c2 = clicks[i - 1];
+            const c3 = clicks[i];
+
+            const timeDiff =
+                c3.timestamp - c1.timestamp;
+
+            const distance1 =
+                Math.hypot(
+                    c2.x - c1.x,
+                    c2.y - c1.y
+                );
+
+            const distance2 =
+                Math.hypot(
+                    c3.x - c2.x,
+                    c3.y - c2.y
+                );
+
+            if (
+                timeDiff <= 1000 &&
+                distance1 <= 50 &&
+                distance2 <= 50
+            ) {
+
+                rageClicks.push({
+                    x: c3.x,
+                    y: c3.y,
+                    timestamp: c3.timestamp
+                });
+
+            }
+
+        }
+
+        res.json(rageClicks);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            error: "Failed to detect rage clicks"
+        });
+
+    }
+
+});
+
 app.get("/sessions", async (req, res) => {
 
     try {
