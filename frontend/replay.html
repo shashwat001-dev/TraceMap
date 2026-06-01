@@ -211,6 +211,46 @@
 
                 }
 
+                else if (event.eventType === "mousemove") {
+
+                    dot.style.left =
+                        event.x + "px";
+
+                    dot.style.top =
+                        (
+                            event.y +
+                            (event.scrollY || 0)
+                        ) + "px";
+
+                    dot.style.width = "30px";
+                    dot.style.height = "30px";
+
+                    dot.style.background =
+                        "rgba(0,0,255,0.4)";
+
+                    dot.style.filter =
+                        "blur(8px)";
+                }
+
+                else if (event.eventType === "scroll") {
+
+                    if (!event.scrollY) return;
+
+                    dot.style.left = "50%";
+
+                    dot.style.top =
+                        event.scrollY + "px";
+
+                    dot.style.width = "100px";
+                    dot.style.height = "100px";
+
+                    dot.style.background =
+                        "rgba(0,255,0,0.4)";
+
+                    dot.style.filter =
+                        "blur(20px)";
+                }
+
                 else {
                     return;
                 }
