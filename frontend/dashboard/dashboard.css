@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    padding: 40px;
+    background: #0f172a;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 25px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+.card p {
+    margin-top: 15px;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.insights-section {
+    margin-top: 40px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.insights-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.insights-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.insights-section li {
+    background: #0f172a;
+    border-left: 4px solid #3b82f6;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.nav-actions {
+    margin-bottom: 20px;
+}
+
+#sessionsBtn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.good {
+    background: #14532d;
+    color: #86efac;
+}
+
+.warning {
+    background: #78350f;
+    color: #fcd34d;
+}
+
+.danger {
+    background: #7f1d1d;
+    color: #fca5a5;
+}

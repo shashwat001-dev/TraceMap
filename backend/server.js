@@ -221,6 +221,176 @@ app.get("/sessions", async (req, res) => {
 
 });
 
+app.get("/analytics", async (req, res) => {
+
+    try {
+
+        const sessions =
+            await Event.distinct("sessionId");
+
+        const totalClicks =
+            await Event.countDocuments({
+                eventType: "click"
+            });
+
+        const totalDeadClicks =
+            await Event.countDocuments({
+                eventType: "deadclick"
+            });
+
+        const maxScrollDepth =
+            await Event.findOne({
+                eventType: "scroll"
+            })
+                .sort({ scrollY: -1 });
+
+        const clicks = await Event.find({
+            eventType: "click"
+        }).sort({ timestamp: 1 });
+
+        let rageClickCount = 0;
+
+        for (let i = 2; i < clicks.length; i++) {
+
+            const c1 = clicks[i - 2];
+            const c2 = clicks[i - 1];
+            const c3 = clicks[i];
+
+            const timeDiff =
+                c3.timestamp - c1.timestamp;
+
+            const distance1 =
+                Math.hypot(
+                    c2.x - c1.x,
+                    c2.y - c1.y
+                );
+
+            const distance2 =
+                Math.hypot(
+                    c3.x - c2.x,
+                    c3.y - c2.y
+                );
+
+            if (
+                timeDiff <= 1000 &&
+                distance1 <= 50 &&
+                distance2 <= 50
+            ) {
+
+                rageClickCount++;
+
+            }
+
+        }
+
+        const sessionEvents =
+            await Event.aggregate([
+                {
+                    $group: {
+                        _id: "$sessionId",
+                        firstVisit: {
+                            $min: "$timestamp"
+                        },
+                        lastVisit: {
+                            $max: "$timestamp"
+                        }
+                    }
+                }
+            ]);
+
+        let totalDuration = 0;
+
+        sessionEvents.forEach(session => {
+
+            totalDuration +=
+                session.lastVisit -
+                session.firstVisit;
+
+        });
+
+        const averageDuration =
+            sessionEvents.length
+                ? Math.floor(
+                    totalDuration /
+                    sessionEvents.length
+                )
+                : 0;
+
+        const totalEvents =
+            await Event.countDocuments();
+
+        let insights = [];
+
+        if (totalDeadClicks > 20) {
+
+            insights.push(
+                "Users are clicking non-functional elements."
+            );
+
+        }
+
+        if (rageClickCount > 20) {
+
+            insights.push(
+                "High user frustration detected."
+            );
+
+        }
+
+        if (maxScrollDepth &&
+            maxScrollDepth.scrollY > 1000) {
+
+            insights.push(
+                "Users are engaging deeply with content."
+            );
+
+        }
+
+        if (averageDuration < 30000) {
+
+            insights.push(
+                "Users are leaving very quickly."
+            );
+
+        }
+
+        res.json({
+
+            totalSessions:
+                sessions.length,
+
+            totalEvents,
+
+            totalClicks,
+
+            totalDeadClicks,
+
+            averageDuration,
+
+            maxScrollDepth:
+                maxScrollDepth
+                    ? maxScrollDepth.scrollY
+                    : 0,
+
+            rageClickCount,
+
+            insights
+
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            error:
+                "Failed to fetch analytics"
+        });
+
+    }
+
+});
+
 app.get("/test", async (req, res) => {
     const events = await Event.find();
 

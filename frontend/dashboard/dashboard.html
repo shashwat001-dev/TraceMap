@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceMap Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <h1>TraceMap Analytics</h1>
+
+    <div class="nav-actions">
+        <button id="sessionsBtn">
+            View Sessions
+        </button>
+    </div>
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h2>Sessions</h2>
+            <p id="sessions">0</p>
+        </div>
+
+        <div class="card">
+            <h2>Events</h2>
+            <p id="events">0</p>
+        </div>
+
+        <div class="card">
+            <h2>Clicks</h2>
+            <p id="clicks">0</p>
+        </div>
+
+        <div class="card">
+            <h2>Dead Clicks</h2>
+            <p id="deadClicks">0</p>
+            <span id="deadBadge" class="badge">
+                Loading
+            </span>
+        </div>
+
+        <div class="card">
+            <h2>Avg Duration</h2>
+            <p id="duration">0</p>
+        </div>
+
+        <div class="card">
+            <h2>Max Scroll</h2>
+            <p id="scrollDepth">0</p>
+            <span id="scrollBadge" class="badge">
+                Loading
+            </span>
+        </div>
+
+        <div class="card">
+            <h2>Rage Clicks</h2>
+            <p id="rageClicks">0</p>
+            <span id="rageBadge" class="badge">
+                Loading
+            </span>
+        </div>
+
+    </div>
+
+    <div class="insights-section">
+
+        <h2>Insights</h2>
+
+        <ul id="insightsList"></ul>
+
+    </div>
+
+
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>
