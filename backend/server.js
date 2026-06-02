@@ -321,15 +321,47 @@ app.get("/analytics", async (req, res) => {
 
         let insights = [];
 
-        if (totalDeadClicks > 20) {
+        if (totalDeadClicks < 10) {
 
             insights.push(
-                "Users are clicking non-functional elements."
+                "Users are interacting with the interface successfully."
             );
 
         }
 
-        if (rageClickCount > 20) {
+        else if (totalDeadClicks < 50) {
+
+            insights.push(
+                "Some users are clicking non-functional elements."
+            );
+
+        }
+
+        else {
+
+            insights.push(
+                "Many users are clicking non-functional elements."
+            );
+
+        }
+
+        if (rageClickCount < 20) {
+
+            insights.push(
+                "User interactions appear healthy."
+            );
+
+        }
+
+        else if (rageClickCount < 100) {
+
+            insights.push(
+                "Some frustration signals detected."
+            );
+
+        }
+
+        else {
 
             insights.push(
                 "High user frustration detected."
@@ -338,7 +370,26 @@ app.get("/analytics", async (req, res) => {
         }
 
         if (maxScrollDepth &&
-            maxScrollDepth.scrollY > 1000) {
+            maxScrollDepth.scrollY < 500) {
+
+            insights.push(
+                "Users rarely scroll beyond the top section."
+            );
+
+        }
+
+        else if (
+            maxScrollDepth &&
+            maxScrollDepth.scrollY < 1000
+        ) {
+
+            insights.push(
+                "Users engage with some content."
+            );
+
+        }
+
+        else {
 
             insights.push(
                 "Users are engaging deeply with content."
@@ -349,7 +400,23 @@ app.get("/analytics", async (req, res) => {
         if (averageDuration < 30000) {
 
             insights.push(
-                "Users are leaving very quickly."
+                "Users leave the site very quickly."
+            );
+
+        }
+
+        else if (averageDuration < 120000) {
+
+            insights.push(
+                "Users spend a moderate amount of time on the site."
+            );
+
+        }
+
+        else {
+
+            insights.push(
+                "Users are spending significant time on the site."
             );
 
         }
