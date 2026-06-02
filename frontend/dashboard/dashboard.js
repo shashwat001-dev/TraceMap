@@ -1,12 +1,53 @@
 async function loadAnalytics() {
 
-    const response =
-        await fetch(
-            "http://localhost:5000/analytics"
+    const selectedPage =
+        localStorage.getItem(
+            "selectedPage"
         );
 
+    const response =
+        await fetch(
+            selectedPage
+                ? `http://localhost:5000/analytics?page=${encodeURIComponent(selectedPage)}`
+                : "http://localhost:5000/analytics"
+        );
+        
     const data =
         await response.json();
+
+    const pageSelector =
+        document.getElementById(
+            "pageSelector"
+        );
+
+    data.pages.forEach(page => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value = page;
+
+        option.textContent = page;
+
+        pageSelector.appendChild(
+            option
+        );
+
+    });
+
+    const savedPage =
+        localStorage.getItem(
+            "selectedPage"
+        );
+
+    if (savedPage) {
+
+        pageSelector.value =
+            savedPage;
+
+    }
 
     document.getElementById(
         "sessions"
@@ -216,5 +257,18 @@ document
     .addEventListener("click", () => {
 
         window.location.href = "../sessions.html";
+
+    });
+
+document
+    .getElementById("pageSelector")
+    .addEventListener("change", (e) => {
+
+        localStorage.setItem(
+            "selectedPage",
+            e.target.value
+        );
+
+        location.reload();
 
     });

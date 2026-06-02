@@ -225,26 +225,41 @@ app.get("/analytics", async (req, res) => {
 
     try {
 
+        const selectedPage =
+            req.query.page;
+
+        const filter =
+            selectedPage
+                ? { page: selectedPage }
+                : {};
+
         const sessions =
-            await Event.distinct("sessionId");
+            await Event.distinct(
+                "sessionId",
+                filter
+            );
 
         const totalClicks =
             await Event.countDocuments({
+                ...filter,
                 eventType: "click"
             });
 
         const totalDeadClicks =
             await Event.countDocuments({
+                ...filter,
                 eventType: "deadclick"
             });
 
         const maxScrollDepth =
             await Event.findOne({
+                ...filter,
                 eventType: "scroll"
             })
                 .sort({ scrollY: -1 });
 
         const clicks = await Event.find({
+            ...filter,
             eventType: "click"
         }).sort({ timestamp: 1 });
 
@@ -285,6 +300,11 @@ app.get("/analytics", async (req, res) => {
 
         const sessionEvents =
             await Event.aggregate([
+
+                {
+                    $match: filter
+                },
+
                 {
                     $group: {
                         _id: "$sessionId",
@@ -296,6 +316,7 @@ app.get("/analytics", async (req, res) => {
                         }
                     }
                 }
+
             ]);
 
         let totalDuration = 0;
@@ -421,6 +442,9 @@ app.get("/analytics", async (req, res) => {
 
         }
 
+        const pages =
+            await Event.distinct("page");
+
         res.json({
 
             totalSessions:
@@ -441,7 +465,9 @@ app.get("/analytics", async (req, res) => {
 
             rageClickCount,
 
-            insights
+            insights,
+
+            pages
 
         });
 
