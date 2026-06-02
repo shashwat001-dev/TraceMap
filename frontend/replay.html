@@ -83,6 +83,34 @@
 
         }
 
+        #analyticsPanel {
+
+            position: fixed;
+
+            top: 90px;
+
+            right: 20px;
+
+            width: 260px;
+
+            background: rgba(20, 20, 20, 0.95);
+
+            color: white;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            z-index: 99999;
+
+        }
+
+        #analyticsPanel h3 {
+
+            margin-top: 0;
+
+        }
+
         .ripple {
             width: 20px;
             height: 20px;
@@ -124,6 +152,25 @@
         <button id="speed1x">1x</button>
         <button id="speed2x">2x</button>
         <button id="speed4x">4x</button>
+        <button id="toggleAnalytics">
+            Analytics
+        </button>
+
+    </div>
+
+    <div id="analyticsPanel">
+
+        <h3>Session Analytics</h3>
+
+        <p>Clicks: <span id="clickCount">0</span></p>
+
+        <p>Dead Clicks: <span id="deadClickCount">0</span></p>
+
+        <p>Rage Clicks: <span id="rageClickCount">0</span></p>
+
+        <p>Duration: <span id="duration">0s</span></p>
+
+        <p>Max Scroll: <span id="maxScroll">0px</span></p>
 
     </div>
 
@@ -209,6 +256,8 @@
                     dot.style.filter =
                         "blur(15px)";
 
+                    dot.style.zIndex = "10000";
+
                 }
 
                 else if (event.eventType === "mousemove") {
@@ -230,6 +279,36 @@
 
                     dot.style.filter =
                         "blur(8px)";
+
+                    dot.style.zIndex = "9999";
+                }
+
+                else if (
+                    event.eventType ===
+                    "deadclick"
+                ) {
+
+                    dot.style.left =
+                        event.x + "px";
+
+                    dot.style.top =
+                        (
+                            event.y +
+                            (event.scrollY || 0)
+                        ) + "px";
+
+                    dot.style.width = "70px";
+
+                    dot.style.height = "70px";
+
+                    dot.style.background =
+                        "rgba(255,0,255,0.55)";
+
+                    dot.style.filter =
+                        "blur(18px)";
+
+                    dot.style.zIndex = "10002";
+
                 }
 
                 else if (event.eventType === "scroll") {
@@ -249,6 +328,8 @@
 
                     dot.style.filter =
                         "blur(20px)";
+
+                    dot.style.zIndex = "9998";
                 }
 
                 else {
@@ -270,6 +351,77 @@
                 );
 
                 const events = await response.json();
+
+                const clickCount =
+                    events.filter(
+                        event =>
+                            event.eventType ===
+                            "click"
+                    ).length;
+
+                document.getElementById(
+                    "clickCount"
+                ).textContent =
+                    clickCount;
+
+                const deadClickCount =
+                    events.filter(
+                        event =>
+                            event.eventType ===
+                            "deadclick"
+                    ).length;
+
+                document.getElementById(
+                    "deadClickCount"
+                ).textContent =
+                    deadClickCount;
+
+                const rageClickCount =
+                    await fetch(
+                        `http://localhost:5000/rage-clicks/${sessionId}`
+                    )
+                        .then(res => res.json());
+
+                document.getElementById(
+                    "rageClickCount"
+                ).textContent =
+                    rageClickCount.length;
+
+                const duration =
+                    events.length
+                        ? events[events.length - 1].timestamp -
+                        events[0].timestamp
+                        : 0;
+
+                const seconds =
+                    Math.floor(duration / 1000);
+
+                document.getElementById(
+                    "duration"
+                ).textContent =
+                    seconds + "s";
+
+                const scrollEvents =
+                    events.filter(
+                        event =>
+                            event.eventType ===
+                            "scroll"
+                    );
+
+                const maxScroll =
+                    scrollEvents.length
+                        ? Math.max(
+                            ...scrollEvents.map(
+                                event =>
+                                    event.scrollY || 0
+                            )
+                        )
+                        : 0;
+
+                document.getElementById(
+                    "maxScroll"
+                ).textContent =
+                    Math.floor(maxScroll) + "px";
 
                 console.log(events);
 
@@ -463,13 +615,44 @@
 
                 dot.style.pointerEvents = "none";
 
-                dot.style.zIndex = "10000";
+                dot.style.zIndex = "10001";
 
                 layer.appendChild(dot);
 
             });
 
         }
+
+        document
+            .getElementById(
+                "toggleAnalytics"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    const panel =
+                        document.getElementById(
+                            "analyticsPanel"
+                        );
+
+                    if (
+                        panel.style.display ===
+                        "none"
+                    ) {
+
+                        panel.style.display =
+                            "block";
+
+                    } else {
+
+                        panel.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
 
         loadScreenshot();
 

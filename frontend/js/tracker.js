@@ -66,7 +66,7 @@ document.addEventListener("click", async (event) => {
     console.log("Click Sent:", result);
 
     if (
-      !isInteractiveElement(event.target) ||
+      // !isInteractiveElement(event.target) ||
       event.target.classList.contains("dead-btn")
     ) {
 
