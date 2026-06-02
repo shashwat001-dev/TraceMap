@@ -21,6 +21,22 @@ console.log("Session ID:", sessionId);
 
 
 
+function isInteractiveElement(element) {
+
+  const tag = element.tagName?.toLowerCase();
+
+  return (
+    tag === "button" ||
+    tag === "a" ||
+    tag === "input" ||
+    tag === "textarea" ||
+    tag === "select" ||
+    element.closest("button") ||
+    element.closest("a")
+  );
+
+}
+
 // CLICK TRACKING
 
 document.addEventListener("click", async (event) => {
@@ -48,6 +64,33 @@ document.addEventListener("click", async (event) => {
     const result = await response.json();
 
     console.log("Click Sent:", result);
+
+    if (
+      !isInteractiveElement(event.target) ||
+      event.target.classList.contains("dead-btn")
+    ) {
+
+      const deadClickData = {
+        sessionId: sessionId,
+        eventType: "deadclick",
+        x: event.clientX,
+        y: event.clientY,
+        scrollY: window.scrollY,
+        page: window.location.pathname,
+        timestamp: Date.now(),
+      };
+
+      await fetch("http://localhost:5000/track", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(deadClickData),
+      });
+
+      console.log("Dead Click Sent");
+
+    }
 
   } catch (error) {
     console.log("Click Error:", error);
