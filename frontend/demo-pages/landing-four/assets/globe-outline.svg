@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 2000" width="2000" height="2000">
+  <defs>
+    <clipPath id="globe-clip">
+      <circle cx="1000" cy="1000" r="900" />
+    </clipPath>
+  </defs>
+
+  <g fill="none" stroke="#000" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Outer globe outline -->
+    <circle cx="1000" cy="1000" r="900" />
+
+    <!-- Grid lines (clipped to globe) -->
+    <g clip-path="url(#globe-clip)">
+      <!-- Meridians -->
+      <line x1="1000" y1="100" x2="1000" y2="1900" />
+      <ellipse cx="1000" cy="1000" rx="650" ry="900" />
+      <ellipse cx="1000" cy="1000" rx="350" ry="900" />
+
+      <!-- Parallels -->
+      <ellipse cx="1000" cy="1000" rx="900" ry="650" />
+      <ellipse cx="1000" cy="1000" rx="900" ry="350" />
+    </g>
+  </g>
+</svg>

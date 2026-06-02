@@ -170,7 +170,7 @@
 
         <p>Duration: <span id="duration">0s</span></p>
 
-        <p>Max Scroll: <span id="maxScroll">0px</span></p>
+        <p>Scroll Depth: <span id="maxScroll">0%</span></p>
 
         <h4>Session Insights</h4>
 
@@ -423,10 +423,30 @@
                         )
                         : 0;
 
+                const pageHeight =
+                    scrollEvents.length
+                        ? Math.max(
+                            ...scrollEvents.map(
+                                event =>
+                                    event.pageHeight || 0
+                            )
+                        )
+                        : 0;
+
+                const scrollPercentage =
+                    pageHeight > 0
+                        ? Math.min(
+                            Math.round(
+                                (maxScroll / pageHeight) * 100
+                            ),
+                            100
+                        )
+                        : 0;
+
                 document.getElementById(
                     "maxScroll"
                 ).textContent =
-                    Math.floor(maxScroll) + "px";
+                    scrollPercentage + "%";
 
                 const insights = [];
 

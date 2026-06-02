@@ -159,6 +159,8 @@ window.addEventListener("scroll", async () => {
     sessionId: sessionId,
     eventType: "scroll",
     scrollY: window.scrollY,
+    pageHeight:
+      document.documentElement.scrollHeight,
     page: window.location.pathname,
     timestamp: now,
   };

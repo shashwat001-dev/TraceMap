@@ -7,6 +7,7 @@ const eventSchema = new mongoose.Schema({
     y: Number,
     scrollY: Number,
     page: String,
+    pageHeight: Number,
     timestamp: Number,
 });
 
