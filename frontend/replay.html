@@ -172,6 +172,11 @@
 
         <p>Max Scroll: <span id="maxScroll">0px</span></p>
 
+        <h4>Session Insights</h4>
+
+        <ul id="sessionInsights">
+        </ul>
+
     </div>
 
     <div id="cursor"></div>
@@ -422,6 +427,100 @@
                     "maxScroll"
                 ).textContent =
                     Math.floor(maxScroll) + "px";
+
+                const insights = [];
+
+                if (deadClickCount > 0) {
+
+                    insights.push(
+                        "User clicked unavailable elements."
+                    );
+
+                }
+
+                if (rageClickCount > 0) {
+
+                    insights.push(
+                        "User showed signs of frustration."
+                    );
+
+                }
+
+                if (duration > 60000) {
+
+                    insights.push(
+                        "User spent significant time on the page."
+                    );
+
+                }
+
+                if (
+                    clickCount > 20 &&
+                    rageClickCount > 2
+                ) {
+
+                    insights.push(
+                        "User actively interacted but encountered friction."
+                    );
+
+                }
+
+                if (
+                    duration > 120000 &&
+                    maxScroll > 1000
+                ) {
+
+                    insights.push(
+                        "User showed strong engagement with the content."
+                    );
+
+                }
+
+                if (
+                    clickCount < 3 &&
+                    duration < 15000
+                ) {
+
+                    insights.push(
+                        "User disengaged quickly and showed limited interaction."
+                    );
+
+                }
+
+                if (maxScroll > 1000) {
+
+                    insights.push(
+                        "User explored deep sections of content."
+                    );
+
+                }
+
+                if (insights.length === 0) {
+
+                    insights.push(
+                        "User navigated smoothly with no significant issues detected."
+                    );
+
+                }
+
+                const insightList =
+                    document.getElementById(
+                        "sessionInsights"
+                    );
+
+                insightList.innerHTML = "";
+
+                insights.forEach(insight => {
+
+                    const li =
+                        document.createElement("li");
+
+                    li.textContent =
+                        insight;
+
+                    insightList.appendChild(li);
+
+                });
 
                 console.log(events);
 
