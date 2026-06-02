@@ -8,7 +8,6 @@
   <title>TraceMap Sessions</title>
 
   <style>
-
     body {
       margin: 0;
       padding: 40px;
@@ -47,6 +46,20 @@
       color: #aaa;
     }
 
+    #newSessionBtn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #00ff99;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 25px;
+    }
+
+    #newSessionBtn:hover {
+      opacity: 0.9;
+    }
   </style>
 
 </head>
@@ -54,6 +67,10 @@
 <body>
 
   <h1>TraceMap Sessions</h1>
+
+  <button id="newSessionBtn">
+    New Session
+  </button>
 
   <div id="sessionsContainer"></div>
 
@@ -108,6 +125,20 @@
       });
 
     }
+
+    document
+      .getElementById("newSessionBtn")
+      .addEventListener("click", () => {
+
+        localStorage.removeItem(
+          "tracemap_session"
+        );
+
+        alert(
+          "Session reset successfully. Visit any tracked page to start a new session."
+        );
+
+      });
 
     loadSessions();
 

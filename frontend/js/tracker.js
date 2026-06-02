@@ -241,3 +241,29 @@ window.addEventListener(
 
 window.testScreenshot =
   captureSessionScreenshot;
+
+window.captureSessionScreenshot =
+  captureSessionScreenshot;
+
+document.addEventListener(
+  "keydown",
+  async (event) => {
+
+    if (
+      event.ctrlKey &&
+      event.shiftKey &&
+      event.key.toLowerCase() === "s"
+    ) {
+
+      event.preventDefault();
+
+      await captureSessionScreenshot();
+
+      alert(
+        "📸 TraceMap Screenshot Captured"
+      );
+
+    }
+
+  }
+);
