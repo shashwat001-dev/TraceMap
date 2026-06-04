@@ -11,7 +11,7 @@ async function loadAnalytics() {
                 ? `http://localhost:5000/analytics?page=${encodeURIComponent(selectedPage)}`
                 : "http://localhost:5000/analytics"
         );
-        
+
     const data =
         await response.json();
 
@@ -270,5 +270,25 @@ document
         );
 
         location.reload();
+
+    });
+
+
+
+document
+    .getElementById("openPageBtn")
+    .addEventListener("click", () => {
+
+        const selectedPage =
+            document.getElementById(
+                "pageSelector"
+            ).value;
+
+        if (!selectedPage) return;
+
+        window.open(
+            selectedPage,
+            "_blank"
+        );
 
     });

@@ -129,3 +129,13 @@ label {
     min-width: 350px;
     cursor: pointer;
 }
+
+#openPageBtn {
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 5px;
+    font-size: 16px;
+    background-color: orangered;
+    color: white;
+    border: none;
+}

@@ -72,6 +72,16 @@
     New Session
   </button>
 
+  <label for="pageFilter">
+    Select Page:
+  </label>
+
+  <select id="pageFilter">
+    <option value="">
+      All Pages
+    </option>
+  </select>
+
   <div id="sessionsContainer"></div>
 
   <script>
@@ -82,13 +92,59 @@
 
       try {
 
-        const response = await fetch("http://localhost:5000/sessions");
+        const selectedPage =
+          localStorage.getItem(
+            "sessionPageFilter"
+          );
 
-        const sessions = await response.json();
+        const response =
+          await fetch(
 
-        console.log(sessions);
+            selectedPage
 
-        renderSessions(sessions);
+              ? `http://localhost:5000/sessions?page=${encodeURIComponent(selectedPage)}`
+
+              : "http://localhost:5000/sessions"
+
+          );
+
+        const data =
+          await response.json();
+
+        const pageFilter =
+          document.getElementById(
+            "pageFilter"
+          );
+
+        pageFilter.innerHTML =
+          `<option value="">
+        All Pages
+     </option>`;
+
+        data.pages.forEach(page => {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value = page;
+          option.textContent = page;
+
+          pageFilter.appendChild(
+            option
+          );
+
+        });
+
+        pageFilter.value =
+          selectedPage || "";
+
+        console.log(data);
+
+        renderSessions(
+          data.sessions
+        );
 
       } catch (error) {
 
@@ -99,6 +155,8 @@
     }
 
     function renderSessions(sessions) {
+
+      container.innerHTML = "";
 
       sessions.forEach((session) => {
 
@@ -139,6 +197,22 @@
         );
 
       });
+
+    document
+      .getElementById("pageFilter")
+      .addEventListener(
+        "change",
+        (e) => {
+
+          localStorage.setItem(
+            "sessionPageFilter",
+            e.target.value
+          );
+
+          location.reload();
+
+        }
+      );
 
     loadSessions();
 

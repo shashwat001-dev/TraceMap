@@ -191,8 +191,17 @@ app.get("/rage-clicks/:sessionId", async (req, res) => {
 app.get("/sessions", async (req, res) => {
 
     try {
+        const selectedPage = req.query.page;
+
+        const matchStage =
+            selectedPage
+                ? { page: selectedPage }
+                : {};
 
         const sessions = await Event.aggregate([
+            {
+                $match: matchStage
+            },
             {
                 $group: {
                     _id: "$sessionId",
@@ -204,10 +213,19 @@ app.get("/sessions", async (req, res) => {
                 $sort: {
                     lastActivity: -1
                 }
+            },
+            {
+                $limit: 10
             }
         ]);
 
-        res.json(sessions);
+        const pages =
+            await Event.distinct("page");
+
+        res.json({
+            sessions,
+            pages
+        });
 
     } catch (error) {
 
@@ -338,7 +356,9 @@ app.get("/analytics", async (req, res) => {
                 : 0;
 
         const totalEvents =
-            await Event.countDocuments();
+            await Event.countDocuments(
+                filter
+            );
 
         let insights = [];
 
