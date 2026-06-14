@@ -7,6 +7,7 @@
 body {
     min-height: 400svh;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .hero {
@@ -591,6 +592,262 @@ body {
     transform: scale(1.5);
 }
 
+.phase3 {
+    height: 100svh;
+    width: 100%;
+    font-family: monospace;
+    /* background-color: #956afa; */
+    margin-top: 50px;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 100px; */
+    position: relative;
+}
+
+.logistics {
+    height: 600px;
+    width: 550px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 50px;
+    text-align: left;
+    font-size: 1rem;
+    /* background-color: ; */
+    border-radius: 50px;
+}
+
+.logistics h1,
+.logistics2 h1 {
+    color: #956afa;
+}
+
+.logistics2 {
+    height: 600px;
+    width: 550px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 50px;
+    text-align: right;
+    font-size: 1rem;
+    /* background-color: ; */
+    border-radius: 50px;
+}
+
+
+
+
+#userform {
+
+    height: 650px;
+    width: 400px;
+    background-color: #111;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #956afa;
+}
+
+fieldset {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px;
+    color: orange;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+input {
+    height: 30px;
+    padding: 10px;
+    background-color: #956afa;
+    color: #fefafa;
+}
+
+input::placeholder {
+    color: white;
+}
+
+select {
+    background-color: white;
+    color: black;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.card-generator {
+    height: 650px;
+    width: 400px;
+    position: relative;
+    /* background-color: aqua; */
+}
+
+#userform,
+.card,
+.loading {
+    position: absolute;
+    inset: 0;
+}
+
+#userform button {
+    padding: 8px;
+    font-size: 1.5rem;
+    width: 100px;
+    border-radius: 15px;
+    border: none;
+    background-color: #956afa;
+    color: white;
+    /* cursor: pointer; */
+}
+
+.card {
+    height: 650px;
+    width: 400px;
+    padding: 10px;
+    background-color: #111;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 1.5rem;
+    border-radius: 20px;
+    display: none;
+}
+
+.card img {
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+}
+
+.card button {
+    padding: 10px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    background-color: #956afa;
+    font-family: monospace;
+    color: white;
+    border: none;
+}
+
+.card p:nth-child(6) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card p:nth-child(6) span {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: limegreen;
+    display: inline-block;
+}
+
+.loading {
+    height: 650px;
+    width: 400px;
+    background-color: #956afa;
+    color: azure;
+    border-radius: 10px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.services {
+    height: 80svh;
+    width: 100%;
+    /* background-color: #956afa; */
+    margin-top: 9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-right: 1rem;
+    /* clip-path: polygon(0 1%, 65% 0, 100% 100%, 32% 100%); */
+}
+
+.serve-con {
+    border-radius: 100px;
+    height: 600px;
+    width: 1000px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    /* background-color: #111; */
+}
+
+.serve-con>h1 {
+    font-family: monospace;
+    font-weight: normal;
+    /* font-style: italic; */
+    font-size: 3.2rem;
+    color: #956afa;
+    text-align: center;
+    letter-spacing: -4px;
+    /* text-decoration: underline; */
+}
+
+.serve1 {
+    height: 80svh;
+    width: clamp(300px, 90vw, 850px);
+    background-color: #111;
+    clip-path: polygon(0 0, 22% 13%, 50% 0, 100% 0, 100% 39%, 100% 59%, 78% 74%, 77% 100%, 40% 87%, 31% 57%, 0 35%, 0 35%);
+}
+
+.serve1 .elem {
+    height: 100px;
+    width: 100%;
+    border-bottom: 2px solid grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: orange;
+    padding-left: 8vw;
+    object-fit: cover;
+    font-family: monospace;
+    position: relative;
+    overflow: visible;
+    /* font-size: 2vw; */
+}
+
+.serve1 .elem h1 {
+    position: relative;
+    z-index: 9;
+    mix-blend-mode: difference;
+}
+
+.serve1 .elem:nth-child(1) h1,
+.serve1 .elem:nth-child(3) h1 {
+    color: white;
+}
+
+.serve1 .elem img {
+    height: 150px;
+    width: 200px;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    transition: all linear 0.3s;
+}
+
 
 @media (max-width: 500px) {
     .hero {
@@ -668,6 +925,86 @@ body {
         object-position: center;
     }
 
+    .phase3 {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 2rem;
+        height: auto;
+        padding: 2rem 1rem;
+    }
+
+    .logistics,
+    .logistics2,
+    .card-generator {
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .logistics,
+    .logistics2 {
+        height: auto;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    #userform,
+    .card,
+    .loading {
+        width: 100%;
+    }
+
+    .logistics h1,
+    .logistics2 h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+    }
+
+    .logistics p,
+    .logistics2 p {
+        font-size: clamp(0.9rem, 1vw, 1.1rem);
+        /* line-height: 1.6; */
+    }
+
+    .services {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .serve-con {
+        width: 100%;
+        max-width: 500px;
+        margin-left: 2px;
+        height: 80svh;
+    }
+
+    .serve1 {
+        /* clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%); */
+        clip-path: polygon(0 0, 28% 13%, 49% 0, 73% 0, 100% 0, 100% 60%, 67% 69%, 61% 86%, 30% 74%, 30% 73%, 23% 53%, 0 42%);
+        height: 85svh;
+        width: 100%;
+    }
+
+    .serve1 .elem {
+        height: 90px;
+        font-size: .8rem;
+    }
+
+    .elem:nth-child(2) h1 {
+        padding-left: 5px;
+    }
+
+    .elem:nth-child(3) h1 {
+        padding-left: 40px;
+    }
+
+    .elem:nth-child(1) h1 {
+        padding-left: 120px;
+    }
+
+    .elem:nth-child(4) h1 {
+        padding-left: 70px;
+    }
 
 }
 

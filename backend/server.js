@@ -167,6 +167,7 @@ app.get("/rage-clicks/:sessionId", async (req, res) => {
                 rageClicks.push({
                     x: c3.x,
                     y: c3.y,
+                    scrollY: c3.scrollY,
                     timestamp: c3.timestamp
                 });
 
@@ -262,6 +263,54 @@ app.get("/analytics", async (req, res) => {
                 ...filter,
                 eventType: "click"
             });
+
+        const totalFormStarts =
+            await Event.countDocuments({
+                ...filter,
+                eventType: "formstart"
+            });
+
+        const totalFormSubmits =
+            await Event.countDocuments({
+                ...filter,
+                eventType: "formsubmit"
+            });
+
+        const formSubmissions =
+            await Event.find({
+                ...filter,
+                eventType: "formsubmit"
+            });
+
+        let averageFormCompletionTime = 0;
+
+        if (formSubmissions.length > 0) {
+
+            const totalTime =
+                formSubmissions.reduce(
+                    (sum, event) =>
+                        sum + (event.completionTime || 0),
+                    0
+                );
+
+            averageFormCompletionTime =
+                Math.floor(
+                    totalTime /
+                    formSubmissions.length
+                );
+
+        }
+
+        let formCompletionRate = 0;
+
+        if (totalFormStarts > 0) {
+
+            formCompletionRate =
+                Math.round(
+                    (totalFormSubmits / totalFormStarts) * 100
+                );
+
+        }
 
         const totalDeadClicks =
             await Event.countDocuments({
@@ -465,6 +514,52 @@ app.get("/analytics", async (req, res) => {
         const pages =
             await Event.distinct("page");
 
+        if (formCompletionRate < 40) {
+
+            insights.push(
+                "Many users start forms but fail to complete them."
+            );
+
+        }
+        else if (formCompletionRate < 70) {
+
+            insights.push(
+                "Form completion rate is moderate and could be improved."
+            );
+
+        }
+        else {
+
+            insights.push(
+                "Users successfully complete forms at a healthy rate."
+            );
+
+        }
+
+
+
+        if (averageFormCompletionTime < 15000) {
+
+            insights.push(
+                "Users complete forms quickly with minimal friction."
+            );
+
+        }
+        else if (averageFormCompletionTime < 45000) {
+
+            insights.push(
+                "Form completion time is within an acceptable range."
+            );
+
+        }
+        else {
+
+            insights.push(
+                "Users spend significant time completing forms."
+            );
+
+        }
+
         res.json({
 
             totalSessions:
@@ -475,6 +570,14 @@ app.get("/analytics", async (req, res) => {
             totalClicks,
 
             totalDeadClicks,
+
+            totalFormStarts,
+
+            totalFormSubmits,
+
+            averageFormCompletionTime,
+
+            formCompletionRate,
 
             averageDuration,
 

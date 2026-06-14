@@ -171,6 +171,164 @@ async function loadAnalytics() {
     ).textContent =
         data.rageClickCount;
 
+
+
+    document.getElementById(
+        "formStarts"
+    ).textContent =
+        data.totalFormStarts;
+
+    document.getElementById(
+        "formSubmits"
+    ).textContent =
+        data.totalFormSubmits;
+
+    document.getElementById(
+        "completionRate"
+    ).textContent =
+        data.formCompletionRate + "%";
+
+    document.getElementById(
+        "avgFormTime"
+    ).textContent =
+        (
+            data.averageFormCompletionTime / 1000
+        ).toFixed(1) + "s";
+
+    
+
+    // FORM STARTS BADGE
+
+    const formStartBadge =
+        document.getElementById(
+            "formStartBadge"
+        );
+
+    if (data.totalFormStarts < 5) {
+
+        formStartBadge.textContent =
+            "🟡 Low Data";
+
+        formStartBadge.className =
+            "badge warning";
+
+    } else {
+
+        formStartBadge.textContent =
+            "🟢 Active";
+
+        formStartBadge.className =
+            "badge good";
+
+    }
+
+
+
+    // FORM SUBMITS BADGE
+
+    const formSubmitBadge =
+        document.getElementById(
+            "formSubmitBadge"
+        );
+
+    if (data.totalFormSubmits < 5) {
+
+        formSubmitBadge.textContent =
+            "🟡 Low Data";
+
+        formSubmitBadge.className =
+            "badge warning";
+
+    } else {
+
+        formSubmitBadge.textContent =
+            "🟢 Active";
+
+        formSubmitBadge.className =
+            "badge good";
+
+    }
+
+
+
+    // COMPLETION RATE BADGE
+
+    const completionBadge =
+        document.getElementById(
+            "completionBadge"
+        );
+
+    if (data.formCompletionRate < 40) {
+
+        completionBadge.textContent =
+            "🔴 Poor";
+
+        completionBadge.className =
+            "badge danger";
+
+    } else if (
+        data.formCompletionRate < 70
+    ) {
+
+        completionBadge.textContent =
+            "🟡 Average";
+
+        completionBadge.className =
+            "badge warning";
+
+    } else {
+
+        completionBadge.textContent =
+            "🟢 Strong";
+
+        completionBadge.className =
+            "badge good";
+
+    }
+
+
+
+    // FORM TIME BADGE
+
+    const formTimeBadge =
+        document.getElementById(
+            "formTimeBadge"
+        );
+
+    const avgSeconds =
+        data.averageFormCompletionTime / 1000;
+
+    if (avgSeconds < 15) {
+
+        formTimeBadge.textContent =
+            "🟢 Quick";
+
+        formTimeBadge.className =
+            "badge good";
+
+    } else if (
+        avgSeconds < 45
+    ) {
+
+        formTimeBadge.textContent =
+            "🟡 Moderate";
+
+        formTimeBadge.className =
+            "badge warning";
+
+    } else {
+
+        formTimeBadge.textContent =
+            "🔴 Slow";
+
+        formTimeBadge.className =
+            "badge danger";
+
+    }
+
+
+
+
     const rageBadge =
         document.getElementById(
             "rageBadge"

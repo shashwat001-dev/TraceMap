@@ -8,6 +8,7 @@ const eventSchema = new mongoose.Schema({
     scrollY: Number,
     page: String,
     pageHeight: Number,
+    completionTime: Number,
     timestamp: Number,
 });
 

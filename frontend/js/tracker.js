@@ -1,4 +1,5 @@
 alert("NEW TRACKER FILE");
+console.log("AFTER ALERT");
 
 function generateSessionId() {
   return (
@@ -18,6 +19,9 @@ if (!sessionId) {
 
 console.log("Tracker Loaded");
 console.log("Session ID:", sessionId);
+
+let formStarted = false;
+let formStartTime = null;
 
 
 
@@ -269,3 +273,45 @@ document.addEventListener(
 
   }
 );
+
+window.addEventListener("DOMContentLoaded", () => {
+
+  const form = document.querySelector("#userform");
+
+  console.log("FORM FOUND:", form);
+
+  if (!form) return;
+
+  form.addEventListener("focusin", () => {
+
+    if (formStarted) return;
+
+    formStarted = true;
+    formStartTime = Date.now();
+
+    sessionStorage.setItem(
+      "formStartTime",
+      formStartTime
+    );
+
+    console.log("FORM STARTED");
+
+    fetch("http://localhost:5000/track", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        sessionId: sessionId,
+        eventType: "formstart",
+        page: window.location.pathname,
+        timestamp: Date.now()
+      })
+    })
+      .then(res => res.json())
+      .then(data => console.log("FORM START SENT", data))
+      .catch(err => console.log(err));
+
+  });
+
+});

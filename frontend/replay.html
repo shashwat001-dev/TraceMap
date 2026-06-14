@@ -83,6 +83,7 @@
 
         }
 
+        /* 
         #analyticsPanel {
 
             position: fixed;
@@ -103,6 +104,41 @@
 
             z-index: 99999;
 
+        } */
+
+        #analyticsPanel {
+
+            position: fixed;
+
+            top: 90px;
+
+            right: 20px;
+
+            width: 260px;
+
+            max-height: calc(100vh - 120px);
+
+            overflow-y: auto;
+
+            background: rgba(20, 20, 20, 0.95);
+
+            color: white;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            z-index: 99999;
+
+        }
+
+        #analyticsPanel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #analyticsPanel::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 10px;
         }
 
         #analyticsPanel h3 {
@@ -171,6 +207,12 @@
         <p>Duration: <span id="duration">0s</span></p>
 
         <p>Scroll Depth: <span id="maxScroll">0%</span></p>
+
+        <p>Form Started: <span id="formStarted">No</span></p>
+
+        <p>Form Submitted: <span id="formSubmitted">No</span></p>
+
+        <p>Completion Time: <span id="completionTime">0s</span></p>
 
         <h4>Session Insights</h4>
 
@@ -448,6 +490,40 @@
                 ).textContent =
                     scrollPercentage + "%";
 
+                const formStartEvent =
+                    events.find(
+                        event =>
+                            event.eventType ===
+                            "formstart"
+                    );
+
+                const formSubmitEvent =
+                    events.find(
+                        event =>
+                            event.eventType ===
+                            "formsubmit"
+                    );
+
+                document.getElementById(
+                    "formStarted"
+                ).textContent =
+                    formStartEvent ? "Yes" : "No";
+
+                document.getElementById(
+                    "formSubmitted"
+                ).textContent =
+                    formSubmitEvent ? "Yes" : "No";
+
+                document.getElementById(
+                    "completionTime"
+                ).textContent =
+                    formSubmitEvent
+                        ? (
+                            formSubmitEvent.completionTime /
+                            1000
+                        ).toFixed(1) + "s"
+                        : "--";
+
                 const insights = [];
 
                 if (deadClickCount > 0) {
@@ -519,6 +595,60 @@
 
                     insights.push(
                         "User navigated smoothly with no significant issues detected."
+                    );
+
+                }
+
+                if (
+                    formStartEvent &&
+                    !formSubmitEvent
+                ) {
+
+                    insights.push(
+                        "User started filling the form but did not submit it."
+                    );
+
+                }
+
+                if (
+                    formStartEvent &&
+                    formSubmitEvent
+                ) {
+
+                    insights.push(
+                        "User successfully completed the form."
+                    );
+
+                }
+
+                if (
+                    formSubmitEvent &&
+                    formSubmitEvent.completionTime < 15000
+                ) {
+
+                    insights.push(
+                        "User completed the form quickly with minimal friction."
+                    );
+
+                }
+
+                else if (
+                    formSubmitEvent &&
+                    formSubmitEvent.completionTime < 45000
+                ) {
+
+                    insights.push(
+                        "User completed the form in a reasonable amount of time."
+                    );
+
+                }
+
+                else if (
+                    formSubmitEvent
+                ) {
+
+                    insights.push(
+                        "User spent significant time completing the form."
                     );
 
                 }
@@ -701,6 +831,8 @@
 
             const rageClicks = await response.json();
 
+            console.log("RAGE CLICK SAMPLE", rageClicks[0]);
+
             const layer =
                 document.getElementById("heatmapLayer");
 
@@ -715,7 +847,10 @@
                     click.x + "px";
 
                 dot.style.top =
-                    click.y + "px";
+                    (
+                        click.y +
+                        (click.scrollY || 0)
+                    ) + "px";
 
                 dot.style.width = "80px";
 
