@@ -139,3 +139,245 @@ label {
     color: white;
     border: none;
 }
+
+.event-distribution {
+
+    margin-top: 40px;
+
+    background: #1e293b;
+
+    border: 1px solid #334155;
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+}
+
+.event-distribution h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+}
+
+.event-bar {
+
+    display: grid;
+
+    grid-template-columns:
+        120px 1fr 80px;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+
+}
+
+.bar {
+
+    height: 14px;
+
+    background: #0f172a;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+}
+
+.fill {
+
+    height: 100%;
+
+    width: 0%;
+
+    border-radius: 999px;
+
+    transition:
+        width 1.2s cubic-bezier(0.22,
+            1,
+            0.36,
+            1);
+
+}
+
+.event-bar:hover .fill {
+
+    filter: brightness(1.2);
+
+}
+
+.clicks-fill {
+
+    background: crimson;
+
+}
+
+.mouse-fill {
+
+    background: cornflowerblue;
+
+}
+
+.scroll-fill {
+
+    background: #22c55e;
+
+}
+
+.rage-fill {
+
+    background: #f59e0b;
+
+}
+
+.dead-fill {
+
+    background: #E75480;
+
+}
+
+#eventSubtitle {
+
+    margin-top: -10px;
+
+    margin-bottom: 25px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+
+}
+
+#themeToggle {
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    margin-left: 10px;
+
+}
+
+/* LIGHT MODE */
+
+body.light-mode {
+
+    background: #cfd8e3;
+
+    color: #0f172a;
+
+}
+
+body.light-mode .card {
+
+    background: #dde5ef;
+
+    border: 1px solid #bcc8d6;
+
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.10);
+
+}
+
+body.light-mode .insights-section {
+
+    background: #dde5ef;
+
+    border: 1px solid #bcc8d6;
+
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.10);
+
+}
+
+body.light-mode .event-distribution {
+
+    background: #dde5ef;
+
+    border: 1px solid #bcc8d6;
+
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.10);
+
+}
+
+body.light-mode .card h2 {
+
+    color: #475569;
+
+}
+
+body.light-mode .bar {
+
+    background: #b8c4d3;
+
+}
+
+body.light-mode .insights-section li {
+
+    background: #c9d3df;
+
+    color: #0f172a;
+
+    border-left: 4px solid #3b82f6;
+
+}
+
+body.light-mode #eventSubtitle {
+
+    color: #475569;
+
+}
+
+body.light-mode #pageSelector {
+
+    background: #dde5ef;
+
+    color: #0f172a;
+
+    border: 1px solid #aebdce;
+
+}
+
+body.light-mode #themeToggle,
+body.light-mode #sessionsBtn {
+
+    background: #334155;
+
+    color: white;
+
+    border: none;
+
+}
+
+body.light-mode #themeToggle:hover,
+body.light-mode #sessionsBtn:hover {
+
+    background: #1e293b;
+
+}
+
+body.light-mode #openPageBtn {
+
+    background: #2563eb;
+
+    color: white;
+
+}
+
+body.light-mode label {
+
+    color: #334155;
+
+}

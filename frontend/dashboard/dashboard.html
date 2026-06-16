@@ -13,9 +13,15 @@
     <h1>TraceMap Analytics</h1>
 
     <div class="nav-actions">
+
         <button id="sessionsBtn">
             View Sessions
         </button>
+
+        <button id="themeToggle">
+            🌙 Dark Mode
+        </button>
+
     </div>
 
     <label for="pageSelector">
@@ -112,6 +118,81 @@
             <span id="formTimeBadge" class="badge">
                 Loading
             </span>
+
+        </div>
+
+    </div>
+
+    <div class="event-distribution" id="eventDistribution">
+
+        <h2>Event Distribution</h2>
+
+        <p id="eventSubtitle">
+            Total Events: 0
+        </p>
+
+        <div class="event-bar">
+
+            <span>Clicks</span>
+
+            <div class="bar">
+                <div id="clickBar" class="fill clicks-fill">
+                </div>
+            </div>
+
+            <span id="clickCount">0</span>
+
+        </div>
+
+        <div class="event-bar">
+
+            <span>Mouse Moves</span>
+
+            <div class="bar">
+                <div id="mouseBar" class="fill mouse-fill">
+                </div>
+            </div>
+
+            <span id="mouseCount">0</span>
+
+        </div>
+
+        <div class="event-bar">
+
+            <span>Scrolls</span>
+
+            <div class="bar">
+                <div id="scrollBar" class="fill scroll-fill">
+                </div>
+            </div>
+
+            <span id="scrollCount">0</span>
+
+        </div>
+
+        <div class="event-bar">
+
+            <span>Rage Clicks</span>
+
+            <div class="bar">
+                <div id="rageBar" class="fill rage-fill">
+                </div>
+            </div>
+
+            <span id="rageCount">0</span>
+
+        </div>
+
+        <div class="event-bar">
+
+            <span>Dead Clicks</span>
+
+            <div class="bar">
+                <div id="deadBar" class="fill dead-fill">
+                </div>
+            </div>
+
+            <span id="deadCount">0</span>
 
         </div>
 

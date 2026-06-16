@@ -264,17 +264,53 @@ app.get("/analytics", async (req, res) => {
                 eventType: "click"
             });
 
-        const totalFormStarts =
+        const totalMouseMoves =
             await Event.countDocuments({
                 ...filter,
-                eventType: "formstart"
+                eventType: "mousemove"
             });
 
-        const totalFormSubmits =
+        const totalScrolls =
             await Event.countDocuments({
                 ...filter,
-                eventType: "formsubmit"
+                eventType: "scroll"
             });
+
+        // const totalFormStarts =
+        //     await Event.countDocuments({
+        //         ...filter,
+        //         eventType: "formstart"
+        //     });
+
+        // const totalFormSubmits =
+        //     await Event.countDocuments({
+        //         ...filter,
+        //         eventType: "formsubmit"
+        //     });
+
+        const formStartSessions =
+            await Event.distinct(
+                "sessionId",
+                {
+                    ...filter,
+                    eventType: "formstart"
+                }
+            );
+
+        const formSubmitSessions =
+            await Event.distinct(
+                "sessionId",
+                {
+                    ...filter,
+                    eventType: "formsubmit"
+                }
+            );
+
+        const totalFormStarts =
+            formStartSessions.length;
+
+        const totalFormSubmits =
+            formSubmitSessions.length;
 
         const formSubmissions =
             await Event.find({
@@ -306,8 +342,14 @@ app.get("/analytics", async (req, res) => {
         if (totalFormStarts > 0) {
 
             formCompletionRate =
-                Math.round(
-                    (totalFormSubmits / totalFormStarts) * 100
+                Math.min(
+                    100,
+                    Math.round(
+                        (
+                            totalFormSubmits /
+                            totalFormStarts
+                        ) * 100
+                    )
                 );
 
         }
@@ -568,6 +610,10 @@ app.get("/analytics", async (req, res) => {
             totalEvents,
 
             totalClicks,
+
+            totalMouseMoves,
+
+            totalScrolls,
 
             totalDeadClicks,
 

@@ -173,6 +173,186 @@ async function loadAnalytics() {
 
 
 
+    // EVENT DISTRIBUTION
+
+    const maxValue = Math.max(
+        data.totalClicks,
+        data.totalMouseMoves,
+        data.totalScrolls,
+        data.rageClickCount,
+        data.totalDeadClicks
+    );
+
+    document.getElementById(
+        "clickCount"
+    ).textContent =
+        data.totalClicks;
+
+    document.getElementById(
+        "mouseCount"
+    ).textContent =
+        data.totalMouseMoves;
+
+    document.getElementById(
+        "scrollCount"
+    ).textContent =
+        data.totalScrolls;
+
+    document.getElementById(
+        "rageCount"
+    ).textContent =
+        data.rageClickCount;
+
+    document.getElementById(
+        "deadCount"
+    ).textContent =
+        data.totalDeadClicks;
+
+    const clickWidth =
+        (data.totalClicks /
+            maxValue) * 100;
+
+    const mouseWidth =
+        (data.totalMouseMoves /
+            maxValue) * 100;
+
+    const scrollWidth =
+        (data.totalScrolls /
+            maxValue) * 100;
+
+    const rageWidth =
+        (data.rageClickCount /
+            maxValue) * 100;
+
+    const deadWidth =
+        (data.totalDeadClicks /
+            maxValue) * 100;
+
+    function animateCounter(
+        elementId,
+        target
+    ) {
+
+        const element =
+            document.getElementById(
+                elementId
+            );
+
+        let current = 0;
+
+        const increment =
+            Math.ceil(
+                target / 50
+            );
+
+        const timer =
+            setInterval(() => {
+
+                current += increment;
+
+                if (
+                    current >= target
+                ) {
+
+                    current = target;
+
+                    clearInterval(
+                        timer
+                    );
+
+                }
+
+                element.textContent =
+                    current.toLocaleString();
+
+            }, 20);
+
+    }
+
+    let barsAnimated = false;
+
+    document
+        .getElementById(
+            "eventDistribution"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                if (
+                    barsAnimated
+                ) return;
+
+                barsAnimated = true;
+
+                document
+                    .getElementById(
+                        "clickBar"
+                    )
+                    .style.width =
+                    clickWidth + "%";
+
+                document
+                    .getElementById(
+                        "mouseBar"
+                    )
+                    .style.width =
+                    mouseWidth + "%";
+
+                document
+                    .getElementById(
+                        "scrollBar"
+                    )
+                    .style.width =
+                    scrollWidth + "%";
+
+                document
+                    .getElementById(
+                        "rageBar"
+                    )
+                    .style.width =
+                    rageWidth + "%";
+
+                document
+                    .getElementById(
+                        "deadBar"
+                    )
+                    .style.width =
+                    deadWidth + "%";
+
+                animateCounter(
+                    "clickCount",
+                    data.totalClicks
+                );
+
+                animateCounter(
+                    "mouseCount",
+                    data.totalMouseMoves
+                );
+
+                animateCounter(
+                    "scrollCount",
+                    data.totalScrolls
+                );
+
+                animateCounter(
+                    "rageCount",
+                    data.rageClickCount
+                );
+
+                animateCounter(
+                    "deadCount",
+                    data.totalDeadClicks
+                );
+
+            }
+        );
+
+    document.getElementById(
+        "eventSubtitle"
+    ).textContent =
+        `Total Events: ${data.totalEvents.toLocaleString()}`;
+
     document.getElementById(
         "formStarts"
     ).textContent =
@@ -195,7 +375,7 @@ async function loadAnalytics() {
             data.averageFormCompletionTime / 1000
         ).toFixed(1) + "s";
 
-    
+
 
     // FORM STARTS BADGE
 
@@ -450,3 +630,52 @@ document
         );
 
     });
+
+const themeToggle =
+    document.getElementById(
+        "themeToggle"
+    );
+
+const savedTheme =
+    localStorage.getItem(
+        "dashboardTheme"
+    );
+
+if (savedTheme === "light") {
+
+    document.body.classList.add(
+        "light-mode"
+    );
+
+    themeToggle.textContent =
+        "🌙 Dark Mode";
+
+}
+
+themeToggle.addEventListener(
+    "click",
+    () => {
+
+        document.body.classList.toggle(
+            "light-mode"
+        );
+
+        const isLight =
+            document.body.classList.contains(
+                "light-mode"
+            );
+
+        localStorage.setItem(
+            "dashboardTheme",
+            isLight
+                ? "light"
+                : "dark"
+        );
+
+        themeToggle.textContent =
+            isLight
+                ? "🌙 Dark Mode"
+                : "☀️ Light Mode";
+
+    }
+);
