@@ -381,3 +381,25 @@ body.light-mode label {
     color: #334155;
 
 }
+
+
+
+#rangeSelector {
+
+    background: #1a2740;
+
+    color: white;
+
+    border: 1px solid #2f4368;
+
+    border-radius: 12px;
+
+    padding: 12px 16px;
+
+    font-size: 14px;
+
+    min-width: 140px;
+
+    margin-bottom: 20px;
+
+}

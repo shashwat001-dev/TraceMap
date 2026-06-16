@@ -1,3 +1,56 @@
+function animateValue(
+    elementId,
+    target
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+    let current = 0;
+
+    const increment =
+        Math.max(
+            1,
+            Math.ceil(target / 50)
+        );
+
+    const timer =
+        setInterval(() => {
+
+            current += increment;
+
+            if (
+                current >= target
+            ) {
+
+                current = target;
+
+                clearInterval(
+                    timer
+                );
+
+            }
+
+            if (elementId === "completionRate") {
+
+                element.textContent =
+                    current + "%";
+
+            }
+
+            else {
+
+                element.textContent =
+                    current.toLocaleString();
+
+            }
+
+        }, 20);
+
+}
+
 async function loadAnalytics() {
 
     const selectedPage =
@@ -5,11 +58,21 @@ async function loadAnalytics() {
             "selectedPage"
         );
 
+    const selectedRange =
+        localStorage.getItem(
+            "selectedRange"
+        ) || "all";
+
+    document.getElementById(
+        "rangeSelector"
+    ).value =
+        selectedRange;
+
     const response =
         await fetch(
             selectedPage
-                ? `http://localhost:5000/analytics?page=${encodeURIComponent(selectedPage)}`
-                : "http://localhost:5000/analytics"
+                ? `http://localhost:5000/analytics?page=${encodeURIComponent(selectedPage)}&range=${selectedRange}`
+                : `http://localhost:5000/analytics?range=${selectedRange}`
         );
 
     const data =
@@ -49,25 +112,25 @@ async function loadAnalytics() {
 
     }
 
-    document.getElementById(
-        "sessions"
-    ).textContent =
-        data.totalSessions;
+    animateValue(
+        "sessions",
+        data.totalSessions
+    );
 
-    document.getElementById(
-        "events"
-    ).textContent =
-        data.totalEvents;
+    animateValue(
+        "events",
+        data.totalEvents
+    );
 
-    document.getElementById(
-        "clicks"
-    ).textContent =
-        data.totalClicks;
+    animateValue(
+        "clicks",
+        data.totalClicks
+    );
 
-    document.getElementById(
-        "deadClicks"
-    ).textContent =
-        data.totalDeadClicks;
+    animateValue(
+        "deadClicks",
+        data.totalDeadClicks
+    );
 
     const deadBadge =
         document.getElementById(
@@ -166,10 +229,10 @@ async function loadAnalytics() {
 
     }
 
-    document.getElementById(
-        "rageClicks"
-    ).textContent =
-        data.rageClickCount;
+    animateValue(
+        "rageClicks",
+        data.rageClickCount
+    );
 
 
 
@@ -182,31 +245,6 @@ async function loadAnalytics() {
         data.rageClickCount,
         data.totalDeadClicks
     );
-
-    document.getElementById(
-        "clickCount"
-    ).textContent =
-        data.totalClicks;
-
-    document.getElementById(
-        "mouseCount"
-    ).textContent =
-        data.totalMouseMoves;
-
-    document.getElementById(
-        "scrollCount"
-    ).textContent =
-        data.totalScrolls;
-
-    document.getElementById(
-        "rageCount"
-    ).textContent =
-        data.rageClickCount;
-
-    document.getElementById(
-        "deadCount"
-    ).textContent =
-        data.totalDeadClicks;
 
     const clickWidth =
         (data.totalClicks /
@@ -227,6 +265,66 @@ async function loadAnalytics() {
     const deadWidth =
         (data.totalDeadClicks /
             maxValue) * 100;
+
+    document
+        .getElementById(
+            "clickBar"
+        )
+        .style.width =
+        clickWidth + "%";
+
+    document
+        .getElementById(
+            "mouseBar"
+        )
+        .style.width =
+        mouseWidth + "%";
+
+    document
+        .getElementById(
+            "scrollBar"
+        )
+        .style.width =
+        scrollWidth + "%";
+
+    document
+        .getElementById(
+            "rageBar"
+        )
+        .style.width =
+        rageWidth + "%";
+
+    document
+        .getElementById(
+            "deadBar"
+        )
+        .style.width =
+        deadWidth + "%";
+
+    animateCounter(
+        "clickCount",
+        data.totalClicks
+    );
+
+    animateCounter(
+        "mouseCount",
+        data.totalMouseMoves
+    );
+
+    animateCounter(
+        "scrollCount",
+        data.totalScrolls
+    );
+
+    animateCounter(
+        "rageCount",
+        data.rageClickCount
+    );
+
+    animateCounter(
+        "deadCount",
+        data.totalDeadClicks
+    );
 
     function animateCounter(
         elementId,
@@ -269,104 +367,28 @@ async function loadAnalytics() {
 
     }
 
-    let barsAnimated = false;
 
-    document
-        .getElementById(
-            "eventDistribution"
-        )
-        .addEventListener(
-            "click",
-            () => {
-
-                if (
-                    barsAnimated
-                ) return;
-
-                barsAnimated = true;
-
-                document
-                    .getElementById(
-                        "clickBar"
-                    )
-                    .style.width =
-                    clickWidth + "%";
-
-                document
-                    .getElementById(
-                        "mouseBar"
-                    )
-                    .style.width =
-                    mouseWidth + "%";
-
-                document
-                    .getElementById(
-                        "scrollBar"
-                    )
-                    .style.width =
-                    scrollWidth + "%";
-
-                document
-                    .getElementById(
-                        "rageBar"
-                    )
-                    .style.width =
-                    rageWidth + "%";
-
-                document
-                    .getElementById(
-                        "deadBar"
-                    )
-                    .style.width =
-                    deadWidth + "%";
-
-                animateCounter(
-                    "clickCount",
-                    data.totalClicks
-                );
-
-                animateCounter(
-                    "mouseCount",
-                    data.totalMouseMoves
-                );
-
-                animateCounter(
-                    "scrollCount",
-                    data.totalScrolls
-                );
-
-                animateCounter(
-                    "rageCount",
-                    data.rageClickCount
-                );
-
-                animateCounter(
-                    "deadCount",
-                    data.totalDeadClicks
-                );
-
-            }
-        );
 
     document.getElementById(
         "eventSubtitle"
     ).textContent =
         `Total Events: ${data.totalEvents.toLocaleString()}`;
 
-    document.getElementById(
-        "formStarts"
-    ).textContent =
-        data.totalFormStarts;
+    animateValue(
+        "formStarts",
+        data.totalFormStarts
+    );
 
-    document.getElementById(
-        "formSubmits"
-    ).textContent =
-        data.totalFormSubmits;
+    animateValue(
+        "formSubmits",
+        data.totalFormSubmits
+    );
 
-    document.getElementById(
-        "completionRate"
-    ).textContent =
-        data.formCompletionRate + "%";
+    animateValue(
+        "completionRate",
+        data.formCompletionRate
+    );
+
 
     document.getElementById(
         "avgFormTime"
@@ -604,6 +626,19 @@ document
 
         localStorage.setItem(
             "selectedPage",
+            e.target.value
+        );
+
+        location.reload();
+
+    });
+
+document
+    .getElementById("rangeSelector")
+    .addEventListener("change", (e) => {
+
+        localStorage.setItem(
+            "selectedRange",
             e.target.value
         );
 

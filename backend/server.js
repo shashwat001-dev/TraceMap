@@ -247,10 +247,46 @@ app.get("/analytics", async (req, res) => {
         const selectedPage =
             req.query.page;
 
+        const range =
+            req.query.range || "all";
+
         const filter =
             selectedPage
                 ? { page: selectedPage }
                 : {};
+
+        if (range !== "all") {
+
+            const now = Date.now();
+
+            let startTime;
+
+            if (range === "today") {
+
+                startTime =
+                    now - (24 * 60 * 60 * 1000);
+
+            }
+
+            else if (range === "7d") {
+
+                startTime =
+                    now - (7 * 24 * 60 * 60 * 1000);
+
+            }
+
+            else if (range === "30d") {
+
+                startTime =
+                    now - (30 * 24 * 60 * 60 * 1000);
+
+            }
+
+            filter.timestamp = {
+                $gte: startTime
+            };
+
+        }
 
         const sessions =
             await Event.distinct(
@@ -275,18 +311,6 @@ app.get("/analytics", async (req, res) => {
                 ...filter,
                 eventType: "scroll"
             });
-
-        // const totalFormStarts =
-        //     await Event.countDocuments({
-        //         ...filter,
-        //         eventType: "formstart"
-        //     });
-
-        // const totalFormSubmits =
-        //     await Event.countDocuments({
-        //         ...filter,
-        //         eventType: "formsubmit"
-        //     });
 
         const formStartSessions =
             await Event.distinct(
