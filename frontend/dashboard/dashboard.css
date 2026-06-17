@@ -403,3 +403,21 @@ body.light-mode label {
     margin-bottom: 20px;
 
 }
+
+.trend {
+    margin-top: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.trend-good {
+    color: #22c55e;
+}
+
+.trend-bad {
+    color: #ef4444;
+}
+
+.trend-neutral {
+    color: #94a3b8;
+}

@@ -78,6 +78,16 @@ async function loadAnalytics() {
     const data =
         await response.json();
 
+    console.log(
+        "Rage Trend:",
+        data.rageTrend
+    );
+
+    console.log(
+        "Dead Click Trend:",
+        data.deadClickTrend
+    );
+
     const pageSelector =
         document.getElementById(
             "pageSelector"
@@ -566,6 +576,76 @@ async function loadAnalytics() {
 
     }
 
+    const rageTrend =
+        document.getElementById(
+            "rageTrend"
+        );
+
+    if (data.rageTrend > 0) {
+
+        rageTrend.textContent =
+            `↑ ${data.rageTrend}% vs Last 24 hrs`;
+
+        rageTrend.className =
+            "trend trend-bad";
+
+    }
+
+    else if (data.rageTrend < 0) {
+
+        rageTrend.textContent =
+            `↓ ${Math.abs(data.rageTrend)}% vs Last 24 hrs`;
+
+        rageTrend.className =
+            "trend trend-good";
+
+    }
+
+    else {
+
+        rageTrend.textContent =
+            "→ 0% vs Last 24 hrs";
+
+        rageTrend.className =
+            "trend trend-neutral";
+
+    }
+
+    const deadTrend =
+        document.getElementById(
+            "deadTrend"
+        );
+
+    if (data.deadClickTrend > 0) {
+
+        deadTrend.textContent =
+            `↑ ${data.deadClickTrend}% vs Last 24 hrs`;
+
+        deadTrend.className =
+            "trend trend-bad";
+
+    }
+
+    else if (data.deadClickTrend < 0) {
+
+        deadTrend.textContent =
+            `↓ ${Math.abs(data.deadClickTrend)}% vs Last 24 hrs`;
+
+        deadTrend.className =
+            "trend trend-good";
+
+    }
+
+    else {
+
+        deadTrend.textContent =
+            "→ 0% vs Last 24 hrs";
+
+        deadTrend.className =
+            "trend trend-neutral";
+
+    }
+
     const insightsList =
         document.getElementById(
             "insightsList"
@@ -682,10 +762,15 @@ if (savedTheme === "light") {
         "light-mode"
     );
 
-    themeToggle.textContent =
-        "🌙 Dark Mode";
-
 }
+
+themeToggle.textContent =
+    document.body.classList.contains(
+        "light-mode"
+    )
+        ? "🌙 Dark Mode"
+        : "☀️ Light Mode";
+
 
 themeToggle.addEventListener(
     "click",

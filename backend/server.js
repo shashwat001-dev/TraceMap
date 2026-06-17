@@ -250,10 +250,19 @@ app.get("/analytics", async (req, res) => {
         const range =
             req.query.range || "all";
 
+        let previousFilter = {};
+
         const filter =
             selectedPage
                 ? { page: selectedPage }
                 : {};
+
+        if (selectedPage) {
+
+            previousFilter.page =
+                selectedPage;
+
+        }
 
         if (range !== "all") {
 
@@ -261,10 +270,20 @@ app.get("/analytics", async (req, res) => {
 
             let startTime;
 
+            let previousStartTime;
+
+            let previousEndTime;
+
             if (range === "today") {
 
                 startTime =
                     now - (24 * 60 * 60 * 1000);
+
+                previousStartTime =
+                    now - (48 * 60 * 60 * 1000);
+
+                previousEndTime =
+                    startTime;
 
             }
 
@@ -284,6 +303,11 @@ app.get("/analytics", async (req, res) => {
 
             filter.timestamp = {
                 $gte: startTime
+            };
+
+            previousFilter.timestamp = {
+                $gte: previousStartTime,
+                $lt: previousEndTime
             };
 
         }
@@ -384,6 +408,12 @@ app.get("/analytics", async (req, res) => {
                 eventType: "deadclick"
             });
 
+        const previousDeadClicks =
+            await Event.countDocuments({
+                ...previousFilter,
+                eventType: "deadclick"
+            });
+
         const maxScrollDepth =
             await Event.findOne({
                 ...filter,
@@ -393,6 +423,11 @@ app.get("/analytics", async (req, res) => {
 
         const clicks = await Event.find({
             ...filter,
+            eventType: "click"
+        }).sort({ timestamp: 1 });
+
+        const previousClicks = await Event.find({
+            ...previousFilter,
             eventType: "click"
         }).sort({ timestamp: 1 });
 
@@ -428,6 +463,71 @@ app.get("/analytics", async (req, res) => {
                 rageClickCount++;
 
             }
+
+        }
+
+        let previousRageClickCount = 0;
+
+        for (let i = 2; i < previousClicks.length; i++) {
+
+            const c1 = previousClicks[i - 2];
+            const c2 = previousClicks[i - 1];
+            const c3 = previousClicks[i];
+
+            const timeDiff =
+                c3.timestamp - c1.timestamp;
+
+            const distance1 =
+                Math.hypot(
+                    c2.x - c1.x,
+                    c2.y - c1.y
+                );
+
+            const distance2 =
+                Math.hypot(
+                    c3.x - c2.x,
+                    c3.y - c2.y
+                );
+
+            if (
+                timeDiff <= 1000 &&
+                distance1 <= 50 &&
+                distance2 <= 50
+            ) {
+
+                previousRageClickCount++;
+
+            }
+
+        }
+
+        let rageTrend = 0;
+
+        if (previousRageClickCount > 0) {
+
+            rageTrend = Math.round(
+                (
+                    (rageClickCount -
+                        previousRageClickCount)
+                    /
+                    previousRageClickCount
+                ) * 100
+            );
+
+        }
+
+        let deadClickTrend = 0;
+
+        if (previousDeadClicks > 0) {
+
+            deadClickTrend = Math.round(
+                (
+                    (totalDeadClicks -
+                        previousDeadClicks)
+                    /
+                    previousDeadClicks
+                ) * 100
+            );
 
         }
 
@@ -504,7 +604,7 @@ app.get("/analytics", async (req, res) => {
         if (rageClickCount < 20) {
 
             insights.push(
-                "User interactions appear healthy."
+                `User interactions appear healthy.`
             );
 
         }
@@ -512,7 +612,7 @@ app.get("/analytics", async (req, res) => {
         else if (rageClickCount < 100) {
 
             insights.push(
-                "Some frustration signals detected."
+                `Some frustration signals detected.`
             );
 
         }
@@ -520,7 +620,7 @@ app.get("/analytics", async (req, res) => {
         else {
 
             insights.push(
-                "High user frustration detected."
+                `High user frustration detected.`
             );
 
         }
@@ -540,7 +640,7 @@ app.get("/analytics", async (req, res) => {
         ) {
 
             insights.push(
-                "Users engage with some content."
+                `Users engage with some content.`
             );
 
         }
@@ -548,15 +648,14 @@ app.get("/analytics", async (req, res) => {
         else {
 
             insights.push(
-                "Users are engaging deeply with content."
+                `Users are engaging deeply with content.`
             );
-
         }
 
         if (averageDuration < 30000) {
 
             insights.push(
-                "Users leave the site very quickly."
+                `Users leave the site quickly.`
             );
 
         }
@@ -572,7 +671,7 @@ app.get("/analytics", async (req, res) => {
         else {
 
             insights.push(
-                "Users are spending significant time on the site."
+                `Users are spending significant time on the site.`
             );
 
         }
@@ -583,7 +682,7 @@ app.get("/analytics", async (req, res) => {
         if (formCompletionRate < 40) {
 
             insights.push(
-                "Many users start forms but fail to complete them."
+                `Many users abandon forms before submitting.`
             );
 
         }
@@ -621,7 +720,7 @@ app.get("/analytics", async (req, res) => {
         else {
 
             insights.push(
-                "Users spend significant time completing forms."
+                `Users spend significant time completing forms.`
             );
 
         }
@@ -657,6 +756,10 @@ app.get("/analytics", async (req, res) => {
                     : 0,
 
             rageClickCount,
+
+            rageTrend,
+
+            deadClickTrend,
 
             insights,
 
@@ -727,6 +830,7 @@ app.get("/screenshot/:sessionId", async (req, res) => {
     }
 
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
