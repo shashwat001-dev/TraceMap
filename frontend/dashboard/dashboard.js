@@ -661,26 +661,40 @@ async function loadAnalytics() {
         // li.textContent =
         //     insight;
 
-        if (insight.includes("frustration")) {
+        if (
+            insight.type === "critical"
+        ) {
 
             li.innerHTML =
-                "🔴 " + insight;
+                "🔴 " +
+                (insight.text || insight);
 
         }
 
         else if (
-            insight.includes("non-functional")
+            insight.type === "warning"
         ) {
 
             li.innerHTML =
-                "🟡 " + insight;
+                "🟡 " +
+                (insight.text || insight);
 
+        }
+
+        else if (
+            insight.type === "positive"
+        ) {
+
+            li.innerHTML =
+                "🟢 " +
+                (insight.text || insight);
         }
 
         else {
 
             li.innerHTML =
-                "🟢 " + insight;
+                "🔵 " +
+                (insight.text || insight);
 
         }
 

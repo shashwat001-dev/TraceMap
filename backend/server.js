@@ -575,153 +575,189 @@ app.get("/analytics", async (req, res) => {
                 filter
             );
 
-        let insights = [];
-
-        if (totalDeadClicks < 10) {
-
-            insights.push(
-                "Users are interacting with the interface successfully."
-            );
-
-        }
-
-        else if (totalDeadClicks < 50) {
-
-            insights.push(
-                "Some users are clicking non-functional elements."
-            );
-
-        }
-
-        else {
-
-            insights.push(
-                "Many users are clicking non-functional elements."
-            );
-
-        }
-
-        if (rageClickCount < 20) {
-
-            insights.push(
-                `User interactions appear healthy.`
-            );
-
-        }
-
-        else if (rageClickCount < 100) {
-
-            insights.push(
-                `Some frustration signals detected.`
-            );
-
-        }
-
-        else {
-
-            insights.push(
-                `High user frustration detected.`
-            );
-
-        }
-
-        if (maxScrollDepth &&
-            maxScrollDepth.scrollY < 500) {
-
-            insights.push(
-                "Users rarely scroll beyond the top section."
-            );
-
-        }
-
-        else if (
-            maxScrollDepth &&
-            maxScrollDepth.scrollY < 1000
-        ) {
-
-            insights.push(
-                `Users engage with some content.`
-            );
-
-        }
-
-        else {
-
-            insights.push(
-                `Users are engaging deeply with content.`
-            );
-        }
-
-        if (averageDuration < 30000) {
-
-            insights.push(
-                `Users leave the site quickly.`
-            );
-
-        }
-
-        else if (averageDuration < 120000) {
-
-            insights.push(
-                "Users spend a moderate amount of time on the site."
-            );
-
-        }
-
-        else {
-
-            insights.push(
-                `Users are spending significant time on the site.`
-            );
-
-        }
-
         const pages =
             await Event.distinct("page");
 
-        if (formCompletionRate < 40) {
+        let insights = [];
 
-            insights.push(
-                `Many users abandon forms before submitting.`
-            );
+        if (totalEvents === 0) {
 
-        }
-        else if (formCompletionRate < 70) {
-
-            insights.push(
-                "Form completion rate is moderate and could be improved."
-            );
+            insights.push({
+                type: "info",
+                text: "No activity recorded for the selected filters."
+            });
 
         }
         else {
 
-            insights.push(
-                "Users successfully complete forms at a healthy rate."
-            );
+            if (totalDeadClicks < 10) {
 
-        }
+                insights.push({
+                    type: "positive",
+                    text: "Users are interacting with the interface successfully."
+                });
+
+            }
+
+            else if (totalDeadClicks < 50) {
+
+                insights.push({
+                    type: "warning",
+                    text: "Some users are clicking non-functional elements."
+                });
+
+            }
+
+            else {
+
+                insights.push({
+                    type: "critical",
+                    text: "Many users are clicking non-functional elements."
+                });
+
+            }
+
+            if (rageClickCount < 20) {
+
+                insights.push({
+                    type: "positive",
+                    text: "User interactions appear healthy."
+                });
+
+            }
+
+            else if (rageClickCount < 100) {
+
+                insights.push({
+                    type: "warning",
+                    text: "Some frustration signals detected."
+                });
+
+            }
+
+            else {
+
+                insights.push({
+                    type: "critical",
+                    text: "High user frustration detected."
+                });
+
+            }
+
+            if (maxScrollDepth &&
+                maxScrollDepth.scrollY < 500) {
+
+                insights.push({
+                    type: "warning",
+                    text: "Users rarely scroll beyond the top section."
+                });
+
+            }
+
+            else if (
+                maxScrollDepth &&
+                maxScrollDepth.scrollY < 1000
+            ) {
+
+                insights.push({
+                    type: "info",
+                    text: "Users engage with some content."
+                });
+
+            }
+
+            else {
+
+                insights.push({
+                    type: "positive",
+                    text: "Users are engaging deeply with content."
+                });
+            }
+
+            if (averageDuration < 30000) {
+
+                insights.push({
+                    type: "warning",
+                    text: "Users leave the site quickly."
+                });
+
+            }
+
+            else if (averageDuration < 120000) {
+
+                insights.push({
+                    type: "info",
+                    text: "Users spend a moderate amount of time on the site."
+                });
+
+            }
+
+            else {
+
+                insights.push({
+                    type: "info",
+                    text: "Users are spending significant time on the site."
+                });
+
+            }
 
 
 
-        if (averageFormCompletionTime < 15000) {
 
-            insights.push(
-                "Users complete forms quickly with minimal friction."
-            );
+            if (totalFormStarts > 0) {
 
-        }
-        else if (averageFormCompletionTime < 45000) {
+                if (formCompletionRate < 40) {
 
-            insights.push(
-                "Form completion time is within an acceptable range."
-            );
+                    insights.push({
+                        type: "critical",
+                        text: "Many users abandon forms before submitting."
+                    });
 
-        }
-        else {
+                }
+                else if (formCompletionRate < 70) {
 
-            insights.push(
-                `Users spend significant time completing forms.`
-            );
+                    insights.push({
+                        type: "warning",
+                        text: "Form completion rate is moderate and could be improved."
+                    });
+
+                }
+                else {
+
+                    insights.push({
+                        type: "positive",
+                        text: "Users successfully complete forms at a healthy rate."
+                    });
+
+                }
+
+
+
+                if (averageFormCompletionTime < 15000) {
+
+                    insights.push({
+                        type: "positive",
+                        text: "Users complete forms quickly with minimal friction."
+                    });
+
+                }
+
+                else if (averageFormCompletionTime < 45000) {
+
+                    insights.push({
+                        type: "info",
+                        text: "Form completion time is within an acceptable range."
+                    });
+                }
+                else {
+
+                    insights.push({
+                        type: "warning",
+                        text: "Users spend significant time completing forms."
+                    });
+
+                }
+            }
 
         }
 
