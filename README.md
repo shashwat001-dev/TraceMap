@@ -1,139 +1,79 @@
 # TraceMap
 
-<div align="center">
+> User Behaviour Tracking & Visualization Platform
 
-### User Behavior Analytics & UX Intelligence Platform
+TraceMap is a full-stack user behaviour tracking and visualization platform that helps developers understand how users interact with web applications through event tracking, session replay, heatmaps, analytics dashboards, form analytics, and behavioural analysis.
 
-Track user interactions, replay sessions, visualize behavior patterns, detect frustration signals, analyze engagement, and generate actionable UX insights.
-
-</div>
+The platform captures user interactions in real time, visualizes them through replay and heatmaps, and helps identify engagement patterns, usability issues, friction points, and user behaviour trends.
 
 ---
 
-# Overview
+## Overview
 
-TraceMap is a full-stack user behavior analytics platform designed to help developers, designers, and product teams understand how users interact with web applications.
+Modern analytics tools often focus on page views and event counts.
 
-Unlike traditional analytics platforms that only provide page views and event counts, TraceMap combines:
+TraceMap provides a deeper understanding of user behaviour by combining:
 
-* User Interaction Tracking
+* Real-Time Event Tracking
+* Session Tracking
 * Session Replay
 * Screenshot Replay
 * Heatmap Visualization
 * Form Analytics
-* Frustration Detection
-* Behavioral Intelligence
-* UX Insight Generation
+* Behaviour Analysis
+* Analytics Dashboards
 
-to provide a deeper understanding of user behavior.
-
-The platform captures real user interactions, visualizes them through replays and heatmaps, analyzes behavioral patterns, and generates meaningful insights that help identify usability issues and optimization opportunities.
+This allows developers to see not only what users did, but also how they interacted with the application.
 
 ---
 
-# Key Features
+# Core Features
 
----
+## 1. Behaviour Tracking
 
-## 1. Session Tracking
+TraceMap automatically records user interactions across web applications.
 
-TraceMap organizes all user interactions into unique sessions, enabling complete user journey analysis.
+### Supported Events
 
-### Features
+* Click Events
+* Mouse Movement Events
+* Scroll Events
+* Form Start Events
+* Form Submit Events
+* Dead Click Events
+* Rage Click Events
 
-* Unique Session Identification
-* Automatic Session Creation
-* Session Persistence
-* Session-Based Event Collection
-* Multi-Page Session Tracking
-* Session Duration Tracking
-* Session Filtering
-* Session Analytics
+### Captured Metadata
 
-### Captured Data
+Each event stores:
 
 * Session ID
 * Timestamp
 * Page Path
-* Event Type
+* Coordinates (X, Y)
 * Scroll Position
-* Interaction Coordinates
+* Page Height
+* Form Completion Time
 
 ---
 
-## 2. User Interaction Tracking
+## 2. Session Tracking
 
-TraceMap continuously records user behavior across the application.
+User interactions are grouped into unique sessions.
 
-### Click Tracking
+### Features
 
-Track user click behavior.
-
-* Click Coordinates
-* Click Frequency
-* Click Density Analysis
-* Click Distribution Tracking
-
-### Mouse Movement Tracking
-
-Monitor cursor movement patterns.
-
-* Cursor Coordinates
-* Cursor Paths
-* Hover Patterns
-* Attention Mapping
-
-### Scroll Tracking
-
-Analyze content consumption behavior.
-
-* Scroll Position
-* Scroll Progress
-* Maximum Scroll Depth
-* Scroll Engagement
-
-### Page Tracking
-
-Track user activity across different pages.
-
-* Page Visits
-* Page Engagement
-* Page-Based Analytics
-* Page Comparison Support
+* Unique Session Identification
+* Session Persistence
+* Session Lifecycle Tracking
+* Multi-Page Session Support
+* Session-Based Analytics
 
 ---
 
-## 3. Form Tracking & Analytics
+## 3. Session Replay
 
-TraceMap tracks user interaction with forms to identify abandonment points and improve conversions.
-
-### Form Event Tracking
-
-* Form Start Tracking
-* Form Submission Tracking
-* Form Interaction Monitoring
-* Form Engagement Collection
-
-### Form Analytics
-
-* Total Form Starts
-* Total Form Submissions
-* Form Completion Rate
-* Average Form Completion Time
-* Form Success Analysis
-
-### Form Behavior Insights
-
-* Form Abandonment Detection
-* Form Friction Detection
-* Conversion Analysis
-* Completion Pattern Analysis
-
----
-
-## 4. Session Replay System
-
-Replay user sessions exactly as they occurred.
+Replay complete user sessions to understand user journeys.
 
 ### Replay Features
 
@@ -141,166 +81,116 @@ Replay user sessions exactly as they occurred.
 * Click Replay
 * Scroll Replay
 * Screenshot Replay
+* Play / Pause Controls
+* Variable Playback Speeds
 
-### Replay Controls
+### Session Insights
 
-* Play / Pause
-* Adjustable Replay Speed
-* Timeline-Based Playback
-* Session Selection
+Replay sessions include:
 
-### Replay Benefits
-
-* Understand User Journeys
-* Debug UX Issues
-* Analyze User Behavior
-* Investigate Frustration Events
+* Click Count
+* Rage Click Count
+* Dead Click Count
+* Session Duration
+* Scroll Depth
+* Form Activity
 
 ---
 
-## 5. Screenshot Replay System
+## 4. Screenshot Replay
 
-TraceMap captures screenshots during sessions to provide visual context during playback.
+TraceMap captures screenshots during sessions to provide visual context.
 
 ### Features
 
 * Automatic Screenshot Capture
 * Manual Screenshot Capture
 * Screenshot Storage
-* Screenshot Retrieval
-* Screenshot-Based Session Replay
+* Screenshot-Based Playback
 
 ### Benefits
 
-* Accurate Session Visualization
 * UI State Preservation
-* Better Replay Fidelity
+* Better Session Reconstruction
+* Improved Replay Accuracy
 
 ---
 
-## 6. Heatmap Analytics
+## 5. Heatmap Visualization
 
-Visualize how users interact with your application.
-
----
+Visualize user interactions directly on pages.
 
 ### Click Heatmaps
 
-Understand where users click most frequently.
-
-Features:
-
-* Click Density Visualization
-* Hotspot Detection
-* Interaction Analysis
-
----
+Identify highly interacted areas.
 
 ### Mouse Movement Heatmaps
 
-Analyze cursor movement patterns.
-
-Features:
-
-* Attention Mapping
-* Cursor Activity Visualization
-* Navigation Analysis
-
----
+Understand cursor movement and user attention.
 
 ### Scroll Heatmaps
 
-Understand content engagement.
+Analyze content consumption and engagement depth.
 
-Features:
+### Dead Click Visualization
 
-* Scroll Density Mapping
-* Reading Pattern Analysis
-* Content Visibility Analysis
-
----
-
-### Dead Click Heatmaps
-
-Identify user expectations that are not met.
-
-Features:
-
-* Non-Functional Element Detection
-* UX Friction Discovery
-* Misleading UI Identification
-
----
+Identify areas where users expect interaction.
 
 ### Rage Click Visualization
 
-Highlight frustration-driven interactions.
-
-Features:
-
-* Repeated Rapid Click Detection
-* Frustration Hotspots
-* UX Problem Areas
+Highlight frustration-driven behaviour.
 
 ---
 
-## 7. Frustration Detection System
+## 6. Form Analytics
 
-Automatically identify user frustration signals.
+Track and analyze form interactions.
 
-### Dead Click Detection
+### Metrics
 
-Detect clicks on elements that do not respond.
+* Form Starts
+* Form Submissions
+* Completion Rate
+* Average Completion Time
 
-Used for:
+### Use Cases
 
-* Broken UI Discovery
-* Misleading Design Detection
-* Interaction Failure Analysis
+* Form Optimization
+* Conversion Analysis
+* Friction Detection
+* Abandonment Analysis
 
-### Rage Click Detection
+---
 
-Detect repeated rapid clicks.
+## 7. Session Management
 
-Used for:
+Browse and manage recorded sessions.
 
-* Frustration Analysis
-* UX Problem Discovery
-* Conversion Issue Detection
+### Features
 
-### Frustration Metrics
-
-* Total Dead Clicks
-* Total Rage Clicks
-* Frustration Trends
-* Friction Analysis
+* Session Listing
+* Latest Session Tracking
+* Session Filtering
+* Page-Based Filtering
+* Quick Replay Access
+* New Session Generation
 
 ---
 
 # Analytics Dashboard
 
-The TraceMap Dashboard provides a centralized view of user behavior and engagement metrics.
+The dashboard provides a centralized view of user behaviour metrics.
 
 ---
 
 ## Session Analytics
 
-Monitor session-level activity.
-
-Metrics:
-
 * Total Sessions
 * Average Session Duration
-* Session Activity Trends
-* Session Distribution
 
 ---
 
 ## Event Analytics
-
-Track overall interaction activity.
-
-Metrics:
 
 * Total Events
 * Total Clicks
@@ -309,193 +199,197 @@ Metrics:
 
 ---
 
-## Page Analytics
-
-Analyze behavior on individual pages.
-
-Features:
-
-* Page Selector
-* Page Filtering
-* Page-Wise Analytics
-* Page-Wise Session Filtering
-* Open Page Navigation
-
-Metrics:
-
-* Page Sessions
-* Page Events
-* Engagement Metrics
-* Scroll Metrics
-
----
-
 ## Form Analytics
-
-Track form performance.
-
-Metrics:
 
 * Total Form Starts
 * Total Form Submissions
-* Form Completion Rate
+* Completion Rate
 * Average Form Completion Time
 
 ---
 
 ## Scroll Analytics
 
-Measure content engagement.
-
-Metrics:
-
 * Maximum Scroll Depth
-* Scroll Percentage
-* Content Consumption Analysis
+* Scroll Engagement Metrics
 
 ---
 
-## Frustration Analytics
-
-Measure UX friction.
-
-Metrics:
+## Behaviour Analytics
 
 * Rage Click Count
 * Dead Click Count
-* Frustration Trends
+* Frustration Indicators
+* Engagement Metrics
 
 ---
 
-## Event Distribution Analytics
+## Event Distribution
 
-Visual breakdown of interaction types.
-
-Includes:
+Visual breakdown of:
 
 * Click Events
 * Mouse Events
 * Scroll Events
-* Event Comparison
+* Rage Click Events
+* Dead Click Events
 
 ---
 
-## Dashboard Filters
+## Dashboard Features
 
-### Page Filter
+### Filtering
 
-Analyze metrics for specific pages.
+* Page Filtering
+* Date Range Filtering
+* Session Filtering
 
-### Date Range Filter
-
-Supported ranges:
+### Date Ranges
 
 * Today
 * Last 7 Days
 * Last 30 Days
 * All Time
 
-### Session Filtering
-
-View specific session groups.
-
----
-
-## Dashboard Enhancements
+### Additional Features
 
 * Trend Indicators
-* Growth Analysis
-* Comparative Metrics
-* Dark Mode
-* Light Mode
-* No Activity State Handling
-* Animated Dashboard Metrics
+* Engagement Badges
+* Behaviour Indicators
+* Dark / Light Mode
+* Open Page Navigation
+* Animated Metrics
 
 ---
 
-# Behavioral Intelligence Layer
+# Behaviour Analysis
 
-TraceMap goes beyond traditional analytics by interpreting user behavior.
+TraceMap analyzes tracked interactions to identify meaningful behaviour patterns.
+
+---
+
+## Rage Click Detection
+
+Detect repeated rapid clicks occurring in a small area.
+
+Useful for identifying:
+
+* User Frustration
+* Broken Interactions
+* Slow Responses
+
+---
+
+## Dead Click Detection
+
+Detect clicks on non-functional elements.
+
+Useful for identifying:
+
+* Misleading UI Components
+* UX Friction
+* User Confusion
 
 ---
 
 ## Engagement Analysis
 
-Measure how actively users interact with content.
+Measure user interaction levels using:
 
-Capabilities:
-
-* High Engagement Detection
-* Active User Identification
-* Interaction Density Analysis
-
----
-
-## Frustration Detection
-
-Automatically identify problematic experiences.
-
-Capabilities:
-
-* Rage Click Analysis
-* Dead Click Analysis
-* Friction Identification
+* Session Activity
+* Interaction Density
+* Scroll Behaviour
 
 ---
 
 ## Deep Content Exploration Detection
 
-Identify users who thoroughly explore content.
-
-Capabilities:
-
-* Long Scroll Sessions
-* High Interaction Sessions
-* Deep Exploration Analysis
+Identify users who actively explore and engage with content.
 
 ---
 
 ## Quick Disengagement Detection
 
-Identify users who leave early.
-
-Capabilities:
-
-* Bounce-Like Sessions
-* Low Interaction Sessions
-* Early Exit Detection
+Identify users who leave quickly with minimal interaction.
 
 ---
 
-## Session-Level Reasoning
+## Session-Level Insights
 
-Generate meaningful observations from session behavior.
+Generate observations based on session behaviour.
 
 Examples:
 
-* User explored content deeply.
-* User experienced frustration before leaving.
-* User interacted heavily but did not convert.
-* User completed a form successfully.
-* User abandoned the page quickly.
+* High User Engagement
+* Frustration Detected
+* Successful Form Completion
+* Early Session Exit
+* Deep Content Exploration
 
 ---
 
-## Rule-Based Behavioral Insights
+# Architecture
 
-Generate actionable insights.
+```text
+User Interaction
+        │
+        ▼
+     Tracker.js
+        │
+        ▼
+     Express API
+        │
+        ▼
+      MongoDB
+        │
+        ▼
 
-Examples:
+──────────────────────────
+Tracking Layer
+──────────────────────────
+• Click Tracking
+• Mouse Tracking
+• Scroll Tracking
+• Form Tracking
 
-* High Rage Click Activity Detected
-* User Frustration Increasing
-* Strong Engagement on Landing Page
-* Form Completion Rate Dropping
-* Content Consumption Improving
+──────────────────────────
+Replay Layer
+──────────────────────────
+• Cursor Replay
+• Click Replay
+• Scroll Replay
+• Screenshot Replay
+
+──────────────────────────
+Visualization Layer
+──────────────────────────
+• Click Heatmaps
+• Mouse Heatmaps
+• Scroll Heatmaps
+• Dead Click Visualization
+• Rage Click Visualization
+
+──────────────────────────
+Analytics Layer
+──────────────────────────
+• Session Analytics
+• Event Analytics
+• Form Analytics
+• Scroll Analytics
+
+──────────────────────────
+Behaviour Analysis Layer
+──────────────────────────
+• Rage Click Detection
+• Dead Click Detection
+• Engagement Analysis
+• Deep Exploration Detection
+• Session Insights
+```
 
 ---
 
-# Technology Stack
+# Tech Stack
 
 ## Frontend
 
@@ -504,7 +398,6 @@ Examples:
 * JavaScript
 * GSAP
 * html2canvas
-* Heatmap.js
 
 ## Backend
 
@@ -517,184 +410,76 @@ Examples:
 
 ---
 
-# Project Architecture
-
-```text
-User Interaction
-        │
-        ▼
-     Tracker.js
-        │
-        ▼
-────────────────────────────
-Captured Events
-────────────────────────────
-• Clicks
-• Mouse Movements
-• Scrolls
-• Form Starts
-• Form Submissions
-• Rage Clicks
-• Dead Clicks
-• Page Activity
-        │
-        ▼
-      Express API
-        │
-        ▼
-       MongoDB
-        │
-        ▼
-
-────────────────────────────
-Analytics Layer
-────────────────────────────
-• Session Analytics
-• Event Analytics
-• Page Analytics
-• Form Analytics
-• Scroll Analytics
-
-────────────────────────────
-Replay Layer
-────────────────────────────
-• Cursor Replay
-• Click Replay
-• Scroll Replay
-• Screenshot Replay
-
-────────────────────────────
-Visualization Layer
-────────────────────────────
-• Click Heatmaps
-• Mouse Heatmaps
-• Scroll Heatmaps
-• Dead Click Heatmaps
-• Rage Click Visualization
-
-────────────────────────────
-Behavioral Intelligence Layer
-────────────────────────────
-• Engagement Analysis
-• Frustration Detection
-• Deep Exploration Detection
-• Quick Disengagement Detection
-• Session-Level Reasoning
-• Rule-Based Insights
-```
-
----
-
 # Current Capabilities
 
-✅ Session Tracking
+### Tracking
 
-✅ Session Management
+* Session Tracking
+* Click Tracking
+* Mouse Tracking
+* Scroll Tracking
+* Form Tracking
 
-✅ Click Tracking
+### Replay
 
-✅ Mouse Movement Tracking
+* Session Replay
+* Cursor Replay
+* Click Replay
+* Scroll Replay
+* Screenshot Replay
 
-✅ Scroll Tracking
+### Visualization
 
-✅ Page Tracking
+* Click Heatmaps
+* Mouse Heatmaps
+* Scroll Heatmaps
+* Dead Click Visualization
+* Rage Click Visualization
 
-✅ Form Tracking
+### Analytics
 
-✅ Form Analytics
+* Session Analytics
+* Event Analytics
+* Form Analytics
+* Scroll Analytics
+* Dashboard Analytics
 
-✅ Session Replay
+### Behaviour Analysis
 
-✅ Cursor Replay
-
-✅ Click Replay
-
-✅ Scroll Replay
-
-✅ Screenshot Replay
-
-✅ Automatic Screenshot Capture
-
-✅ Manual Screenshot Capture
-
-✅ Click Heatmaps
-
-✅ Mouse Heatmaps
-
-✅ Scroll Heatmaps
-
-✅ Dead Click Heatmaps
-
-✅ Rage Click Visualization
-
-✅ Dead Click Detection
-
-✅ Rage Click Detection
-
-✅ Session Analytics
-
-✅ Event Analytics
-
-✅ Page Analytics
-
-✅ Scroll Analytics
-
-✅ Form Analytics
-
-✅ Dashboard Filters
-
-✅ Date Range Filtering
-
-✅ Page Filtering
-
-✅ Session Filtering
-
-✅ Trend Indicators
-
-✅ Dark / Light Theme
-
-✅ Behavioral Intelligence
-
-✅ Engagement Analysis
-
-✅ Frustration Detection
-
-✅ Deep Content Exploration Detection
-
-✅ Quick Disengagement Detection
-
-✅ Session-Level Reasoning
-
-✅ Rule-Based Behavioral Insights
+* Rage Click Detection
+* Dead Click Detection
+* Engagement Analysis
+* Deep Exploration Detection
+* Quick Disengagement Detection
+* Session-Level Insights
 
 ---
 
 # Future Roadmap
 
-## Advanced Analytics
+### Advanced Analytics
 
 * Cross-Session Trend Analysis
-* User Journey Analytics
-* Funnel Analysis
+* User Journey Analysis
+* Funnel Analytics
 * Page Comparison Analytics
 
-## AI Intelligence Layer
+### AI Features
 
 * AI Session Summaries
-* AI-Powered UX Recommendations
-* AI Behavioral Pattern Detection
-* AI Anomaly Detection
+* Automated UX Recommendations
+* Behaviour Pattern Recognition
+* Anomaly Detection
 
-## Platform Expansion
+### Platform Expansion
 
 * Multi-Project Support
 * Team Collaboration
 * User Segmentation
 * Real-Time Analytics
-* Organization Dashboards
 
 ---
 
 # Vision
 
-TraceMap aims to become a complete UX observability platform that combines analytics, replay, visualization, behavioral intelligence, and AI-powered recommendations to help teams understand users, identify friction, improve engagement, and build exceptional user experiences.
+TraceMap aims to evolve into a comprehensive User Behaviour Tracking & Visualization Platform that helps developers understand how users interact with digital products, identify friction points, improve engagement, and make data-driven UX decisions.
